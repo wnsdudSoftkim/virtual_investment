@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 from fastapi import APIRouter
-from config.config import binance_ticker_uri
+from config.config import binance_ticker_uri, binance_symbol_uri
 import requests
 
 router = APIRouter(
@@ -40,7 +40,8 @@ async def _get_binance_data(start_date, end_date, symbol):
     while start < end:
         print(datetime.fromtimestamp(start // 1000))
         params['startTime'] = start
-        result = requests.get(binance_ticker_uri, params=params)
+        result = requests.get(binance_symbol_uri, params=params)
         js = result.json()
         if not js:
             break
+        print(js)
