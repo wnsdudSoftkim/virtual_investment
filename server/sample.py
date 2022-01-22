@@ -13,16 +13,13 @@ async def bithumb_ws_client():
         print(greeting)
 
 
-async def main():
-    print('?')
+async def test_main():
+    print('')
     await bithumb_ws_client()
 
 
 @app.get('/')
 async def test_get():
     print('???????')
-    asyncio.run(main())
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    res = await test_main()
+    asyncio.run(res)
