@@ -8,6 +8,7 @@ router = APIRouter(
     tags=['bithumbs']
 )
 
+# real-time data
 @router.get('/get-client')
 async def bithumb_ws_client():
     uri = config.bithumb_websocket_uri
