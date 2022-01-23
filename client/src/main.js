@@ -1,8 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import store from 'src/store/index'
-import router from 'src/router/index'
-createApp(App).mount('#app')
+import router from './router/index'
+import store from './store/index'
 
 
 async function init() {
