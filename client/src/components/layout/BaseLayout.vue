@@ -15,7 +15,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .base-layout{
     height:100%;
     min-height: 700px;

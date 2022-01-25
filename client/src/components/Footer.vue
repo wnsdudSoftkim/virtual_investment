@@ -1,6 +1,11 @@
 <template>
     <div class="main-footer">
+        <div class="left-footer">
+            
+        </div>
+        <div class="right-footer">
 
+        </div>
     </div>
 </template>
 

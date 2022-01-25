@@ -13,7 +13,7 @@ export default {
 
 <style>
   body {
-    min-width: 768px;
+    width:100%;
     overflow-y: scroll;
     font-size: 14px;
     line-height: 1.5;
