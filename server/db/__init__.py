@@ -3,10 +3,10 @@ from config.config import mongodb_service_local_uri
 from pydantic import BaseModel, Field
 from bson import ObjectId
 
-
 client = motor.motor_asyncio.AsyncIOMotorClient(mongodb_service_local_uri)
 database = client.mydb
 collection = database.get_collection('investment')
+
 
 class PyObjectId(ObjectId):
 

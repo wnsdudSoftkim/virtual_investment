@@ -5,6 +5,7 @@ app = FastAPI()
 
 app.include_router(router)
 
+
 @app.get('/')
 async def main():
     return ""
