@@ -1,8 +1,6 @@
 <template>
     <div class="base-layout">
-        <div class="section">
-
-        </div>
+        <slot></slot>
         <main-footer></main-footer>
     </div>
 </template>
@@ -16,9 +14,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/assets/scss/_base";
 .base-layout{
     height:100%;
-    min-height: 700px;
 }
 
 </style>

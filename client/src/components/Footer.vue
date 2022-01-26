@@ -2,12 +2,12 @@
     <div class="main-footer">
         <div class="left-footer">
             <span class="left-footer-span">
-                    ascasc
+                    Left Footer
             </span>
         </div>
         <div class="right-footer">
             <span class="right-footer-span">
-
+                Right Footer
             </span>
         </div>
     </div>
@@ -25,12 +25,21 @@ export default {
         z-index: 100;
         bottom: 0;
         width: 100%;
-        height: 59px;
+        height: 2rem;
         border-top: 1px solid #eee;
         background: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
     }
     .left-footer{
         .left-footer-span{
+            color:$baseColor;
+        }
+    }
+    .right-footer{
+        .right-footer-span{
             color:$baseColor;
         }
     }

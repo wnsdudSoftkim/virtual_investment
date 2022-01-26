@@ -15,6 +15,7 @@ export default {
   body {
     width:100%;
     overflow-y: scroll;
+    overflow-x: unset;
     font-size: 14px;
     line-height: 1.5;
     background: #fff;
