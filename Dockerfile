@@ -1,17 +1,6 @@
-#
 FROM python:3.8
-
-#
-WORKDIR /code
-
-#
-COPY ./requirements.txt /code/requirements.txt
-
-#
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-
-#
-COPY ./server /code/server
-
-#
-CMD ["uvicorn", "server.main:app", "--host", "0.0.0.0", "--port", "80"]
+ENV PYTHONPATH=$PYTHONPATH:./server
+COPY requirements.txt /tmp
+RUN pip3 install -r /tmp/requirements.txt
+COPY ./server /server
+CMD ["uvicorn", "server.main:app", "--host", "0.0.0.0", "--port", "5000"]

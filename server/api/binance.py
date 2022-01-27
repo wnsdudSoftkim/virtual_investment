@@ -4,7 +4,6 @@ from fastapi import APIRouter
 from config.config import binance_ticker_uri, binance_symbol_uri
 import requests
 import pandas as pd
-from tqdm import tqdm
 
 router = APIRouter(
     prefix='/binance',
