@@ -1,11 +1,23 @@
-import motor.motor_asyncio
+from motor.motor_asyncio import AsyncIOMotorClient
 from config.config import mongodb_service_local_uri
 from pydantic import BaseModel, Field
 from bson import ObjectId
+from fastapi.logger import logger
 
-client = motor.motor_asyncio.AsyncIOMotorClient(mongodb_service_local_uri)
-database = client.mydb
-collection = database.get_collection('investment')
+client: AsyncIOMotorClient = None
+
+
+def connect_db():
+    logger.info('connecting mongodb service')
+    client = AsyncIOMotorClient(mongodb_service_local_uri)
+    database = client.mydb
+    collection = database.get_collection('investment')
+    logger.info('complete connect')
+
+
+def close_db():
+    client.close()
+    logger.info('close mongodb connect')
 
 
 class PyObjectId(ObjectId):
