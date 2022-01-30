@@ -16,4 +16,5 @@ class Settings:
     MONGO_DB = "mydb"
 
 
-setting = Settings()
+def get_settings():
+    return Settings()
