@@ -5,19 +5,24 @@ from bson import ObjectId
 from fastapi.logger import logger
 
 client: AsyncIOMotorClient = None
+db = None
 
 
 def connect_db():
     logger.info('connecting mongodb service')
     client = AsyncIOMotorClient(mongodb_service_local_uri)
-    database = client.mydb
-    collection = database.get_collection('investment')
+    db = client.mydb
+    collection = db.get_collection('investment')
     logger.info('complete connect')
 
 
 def close_db():
     client.close()
     logger.info('close mongodb connect')
+
+
+def get_mongo_db():
+    return db
 
 
 class PyObjectId(ObjectId):

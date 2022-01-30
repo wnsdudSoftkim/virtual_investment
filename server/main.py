@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from server.api import router
 from db import connect_db, close_db
-from config.config import settings
+from config.config import setting
 
 app = FastAPI(openapi_url=None, docs_url=None, redoc_url=None)
 
@@ -27,7 +27,7 @@ def close_database_connection_pool():
 
 
 def start_application():
-    app = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
+    app = FastAPI(title=setting.PROJECT_NAME, version=setting.PROJECT_VERSION)
     include_router(app)
     open_database_connection_pool()
     return app
