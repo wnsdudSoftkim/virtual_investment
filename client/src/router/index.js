@@ -9,8 +9,22 @@ const routes= [
         // route config
         path:'/store',
         component: ()=> import('@/views/Home')
-
-    }
+    },
+    {
+        path:'/chartjs',
+        name: 'VueChartJS',
+        componsent: () => import('@/views/VueChartJS')
+    },
+    {
+        path:'/chartkick',
+        name: 'VueChartKick',
+        componsent: () => import('@/views/VueChartKick')
+    },
+    {
+        path:'/charts',
+        name: 'VueChartS',
+        componsent: () => import('@/views/VueChartS')
+    },
 ]
 
 const router = createRouter({
