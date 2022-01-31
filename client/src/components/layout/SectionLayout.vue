@@ -1,15 +1,16 @@
 <template>
     <div class="section-layout" >
         <div class="section-container">
-            <slot></slot> <!--여기에 넣을 것 !-->
+            <chart-section></chart-section>
         </div>
     </div>
 </template>
 
 <script>
+import ChartSection from '@/components/layout/Chart/ChartSectionLayout.vue'
 export default {
     name:"section-layout",
-
+    components: {ChartSection}
 
 }
 </script>
