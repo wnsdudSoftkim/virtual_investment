@@ -1,65 +1,67 @@
 <template>
   <div class="container">
-    <line-chart
+    <update-chart
       v-if="loaded"
-      :chartdata="chartdata"
-      :options="options"/>
+      v-bind:cbvalue="cbvalue"/>
   </div>
 </template>
 
 <script>
-import LineChart from '@/components/Chart/LineChart'
+import UpdateChart from '@/components/Chart/UpdateChart'
 
 export default {
-  name: 'LineChartContainer',
-  components: { LineChart },
-  data: () => ({
-    loaded: false,
-    chartdata: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
-            'August', 'September', 'October', 'November', 'December'], 
-            datasets:[{
-                label: 'Data One',
-                backgroundColor: '#f87979',
-                pointBackgroundColor: 'white',
-                borderWidth: 1,
-                pointBorderColor: '#24pEBF',
-                data:[40, 20, 30, 50, 90, 10, 20, 40, 50, 70, 90, 100]
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks:{
-                        beginAtZero:true
-                    },
-                    gridLines: {
-                        display:true
-                    }
-                }],
-                xAxes: [{
-                    gridLines: {
-                        display: false
-                    }
-                }],
-
-            },
-            legend: {
-                display:true
-            },
-            responsive: true,
-            maintainAspectRatio: false
+    name: 'LineChartContainer',
+    components: { UpdateChart },
+    data: function(){
+        return {
+            loaded: false,
+            logs:[],
+            cbvalue: [90, 10, 20, 30, 50, 10, 30, 40, 60, 100, 20 , 40],
+            status:'disconnected',
         }
-  }),
-  async mounted () {
-    this.loaded = false
-    try {
-    //   const { userlist } = await fetch('/api/userlist')
-    //   this.chartdata = userlist
-      this.loaded = true
-    } catch (e) {
-      console.error(e)
+    }, 
+    mounted () {
+        this.connect()
+        try {
+            this.loaded = true
+        }catch(e) {
+            console.log(e)
+        }
+    },
+    computed: {
+        comdata() {
+            console.log(this.cbvalue)
+            return this.cbvalue
+        }
+    },
+    methods: {
+        connect() {
+            const ws = new WebSocket('ws://localhost:8000/ws')
+            ws.onopen = () => {
+                this.status = 'connected'
+                console.log('status:  '+ this.status)
+                this.logs.push({event: 'connect complete: ', data: 'ws://localhost:8000/ws'})
+
+                setInterval(() => ws.send('echo'), 5000)
+
+                ws.onmessage = ({data}) => {
+                    const recv = JSON.parse(data)
+                    const value = Math.floor((recv.value * 100))
+                    console.log(value)
+                    const copied = this.cbvalue.slice()
+                    copied.shift()
+                    copied.push(value)
+                    this.cbvalue = copied
+                    this.$forceUpdate()
+                    
+                }
+            }
+        },
+        disconnect() {
+            this.socket.close()
+            this.status = 'disconnected'
+            this.logs = []
+        }
     }
-  }
 }
 </script>

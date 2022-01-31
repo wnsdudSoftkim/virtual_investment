@@ -10,9 +10,12 @@ const routes= [
         component: ()=> import('@/views/Home')
     },
     {
+        // route config
         path:'/sample',
-        component: () => import('@/components/Chart/LineChart')
+        component: ()=> import('@/components/Chart/UpdateChart')
     },
+
+
     {
         path:'/chartjs',
         component: () => import('@/views/Chart/VueChartJS')

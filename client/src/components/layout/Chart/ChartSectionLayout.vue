@@ -10,17 +10,13 @@
         <li class="chart-li">
             <router-link to="/chartKick" class="chart-router">vue-chartKick</router-link>
         </li>
-        <li style="height:100px">
-            <line-chart></line-chart>
-        </li>
     </ul>
 
 </template>
 
 <script>
-import LineChart from '../../Chart/LineChart.vue'
 export default {
-    component: LineChart
+
 }
 </script>
 
