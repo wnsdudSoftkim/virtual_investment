@@ -2,7 +2,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from config.config import mongodb_service_local_uri, Settings
 from pydantic import BaseModel, Field
 from bson import ObjectId
-import logging
+from fastapi.logger import logger
 
 
 class Database:
@@ -14,9 +14,7 @@ database = Database()
 
 
 def connect_db():
-    print('connecting mongodb service')
-    logger = logging.getLogger("base_middleware")
-    logger.setLevel(logging.INFO)
+    # print('connecting mongodb service')
     logger.info('connecting mongodb service')
     database.client = AsyncIOMotorClient(Settings.MONGO_SERVICE_URI)
     database.db = database.client[Settings.MONGO_DB]
@@ -24,8 +22,6 @@ def connect_db():
 
 
 def close_db():
-    logger = logging.getLogger("base_middleware")
-    logger.setLevel(logging.INFO)
     database.client.close()
     logger.info('close mongodb connect')
 
