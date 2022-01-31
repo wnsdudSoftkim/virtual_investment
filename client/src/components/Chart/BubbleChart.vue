@@ -1,0 +1,45 @@
+<script>
+import {Bubble} from 'vue3-chart-v2'
+export default {
+    extends: Bubble,
+    data: () => ({
+        datacollection: {
+            labels: ['Data'], 
+            datasets:[{
+                label: 'Data One',
+                backgroundColor: '#f87979',
+                pointBackgroundColor: 'white',
+                borderWidth: 1,
+                pointBorderColor: '#24pEBF',
+                data:[{x: 100, y: 0, r: 10},{x: 60, y: 30, r: 20},{x: 40, y: 60, r: 25},{x: 80, y: 80, r: 50},]
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks:{
+                        beginAtZero:true
+                    },
+                    gridLines: {
+                        display:true
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    }
+                }],
+
+            },
+            legend: {
+                display:true
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    }),
+    mounted () {
+        this.renderChart(this.datacollection, this.options)
+    }
+}
+</script>

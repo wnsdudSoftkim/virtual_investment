@@ -1,5 +1,4 @@
 import {createRouter, createWebHistory} from 'vue-router'
-
 const routes= [
     {
         path:'/',
@@ -11,19 +10,20 @@ const routes= [
         component: ()=> import('@/views/Home')
     },
     {
+        path:'/sample',
+        component: () => import('@/components/Chart/LineChart')
+    },
+    {
         path:'/chartjs',
-        name: 'VueChartJS',
-        componsent: () => import('@/views/VueChartJS')
+        component: () => import('@/views/Chart/VueChartJS')
     },
     {
         path:'/chartkick',
-        name: 'VueChartKick',
-        componsent: () => import('@/views/VueChartKick')
+        component: () => import('@/views/Chart/VueChartKick')
     },
     {
         path:'/charts',
-        name: 'VueChartS',
-        componsent: () => import('@/views/VueChartS')
+        component: () => import('@/views/Chart/VueCharts')
     },
 ]
 

@@ -10,13 +10,17 @@
         <li class="chart-li">
             <router-link to="/chartKick" class="chart-router">vue-chartKick</router-link>
         </li>
+        <li style="height:100px">
+            <line-chart></line-chart>
+        </li>
     </ul>
 
 </template>
 
 <script>
+import LineChart from '../../Chart/LineChart.vue'
 export default {
-
+    component: LineChart
 }
 </script>
 
@@ -30,7 +34,7 @@ export default {
         margin: 0 1rem;
     }
     .chart-router{
-        color:$basecolor;
+        color:$baseColor;
     }
 
 </style>
