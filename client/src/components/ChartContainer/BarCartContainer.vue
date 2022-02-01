@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <line-chart
+    <bar-chart
       v-if="loaded"
       v-bind:cbvalue="cbvalue"/>
   </div>
 </template>
 
 <script>
-import LineChart from '@/components/Chart/LineChart'
-import methods from '@/assets/js/common.js'
+import BarChart from '@/components/Chart/BarChart'
+
 export default {
-    name: 'LineChartContainer',
-    components: { LineChart },
+    name: 'BarChartContainer',
+    components: { BarChart },
     data: function(){
         return {
             loaded: false,
@@ -30,13 +30,11 @@ export default {
     },
     computed: {
         comdata() {
-            console.log(this.cbvalue)
             return this.cbvalue
         }
     },
     methods: {
         connect() {
-            methods.chartConnect()
             // const ws = new WebSocket('ws://localhost:8000/ws')
             // ws.onopen = () => {
             //     this.status = 'connected'
@@ -59,7 +57,6 @@ export default {
             // }
         },
         disconnect() {
-            methods.chartDisconnect()
             // this.socket.close()
             // this.status = 'disconnected'
             // this.logs = []

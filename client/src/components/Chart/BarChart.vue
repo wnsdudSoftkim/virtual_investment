@@ -1,9 +1,19 @@
+<template>
+  <div>
+      <canvas id="chart" width="400" height="400"></canvas>
+  </div>
+</template>
+
 <script>
-import {Bar} from 'vue3-chart-v2'
+import { Chart, registerables } from 'chart.js'
+Chart.register(...registerables)
 export default {
-    extends: Bar,
+    props: {
+        cbvalue: Number
+    },
+
     data: () => ({
-        datacollection: {
+        chartdata: {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
             'August', 'September', 'October', 'November', 'December'], 
             datasets:[{
@@ -11,8 +21,8 @@ export default {
                 backgroundColor: '#f87979',
                 pointBackgroundColor: 'white',
                 borderWidth: 1,
-                pointBorderColor: '#24pEBF',
-                data:[40, 20, 30, 50, 90, 10, 20, 40, 50, 70, 90, 100]
+                pointBorderColor: 'red',
+                data: [90, 10, 20, 30, 50, 10, 30, 40, 60, 100, 20 , 40]
             }]
         },
         options: {
@@ -37,10 +47,37 @@ export default {
             },
             responsive: true,
             maintainAspectRatio: false
-        }
+        },
     }),
-    mounted () {
-        this.renderChart(this.datacollection, this.options)
+    methods: {
+        fillData() {
+            const ctx = document.getElementById('chart').getContext('2d')
+            this.myChart = new Chart(ctx, {
+                type: 'bar',
+                data: this.chartdata,
+                options:this.options
+                
+            })
+        },
+        addData() {
+            // this.myChart.data.datasets[0].data = this.cbvalue
+            // this.myChart.update()
+            this.myChart.data.datasets[0].data = this.myChart.data.datasets[0].data.concat([this.cbvalue])
+            this.myChart.data.labels= this.myChart.data.labels.concat(['sample'])
+            
+            this.myChart.update()
+        }
+    },
+    mounted() {
+        this.fillData()
+    },
+    watch: {
+        'cbvalue': 'addData'
     }
+
 }
 </script>
+
+<style>
+
+</style>

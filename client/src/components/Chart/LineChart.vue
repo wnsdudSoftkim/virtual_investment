@@ -9,11 +9,10 @@ import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
 export default {
     props: {
-        cbvalue: Array
+        cbvalue: Number
     },
 
     data: () => ({
-        myvalue: [],
         chartdata: {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
             'August', 'September', 'October', 'November', 'December'], 
@@ -61,7 +60,11 @@ export default {
             })
         },
         addData() {
-            this.myChart.data.datasets[0].data = this.cbvalue
+            // this.myChart.data.datasets[0].data = this.cbvalue
+            // this.myChart.update()
+            this.myChart.data.datasets[0].data = this.myChart.data.datasets[0].data.concat([this.cbvalue])
+            this.myChart.data.labels= this.myChart.data.labels.concat(['sample'])
+            
             this.myChart.update()
         }
     },
