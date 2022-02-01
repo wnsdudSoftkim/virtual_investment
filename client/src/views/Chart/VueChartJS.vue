@@ -22,7 +22,7 @@
             </div>
                 <div class="column">
                 <h3>Bar Chart</h3>
-                <bar-chart></bar-chart>
+                <bar-chart-container></bar-chart-container>
             </div>
                 <div class="column">
                 <h3>Bubble Chart</h3>
@@ -39,41 +39,60 @@
 
 <script>
 import LineChartContainer from '@/components/ChartContainer/LineChartContainer'
-import BarChart from '@/components/Chart/BarChart'
+import BarChartContainer from '@/components/ChartContainer/BarChartContainer'
 import BubbleChart from '@/components/Chart/BubbleChart'
-// import Reactive from '@/components/Chart/Reactive'
+import { useStore } from 'vuex'
+import {computed} from 'vue'
+import methods from '@/assets/js/common.js'
 export default {
     name:'VueChartJS',
-    components: { LineChartContainer, BarChart, BubbleChart },
+    components: { LineChartContainer, BarChartContainer, BubbleChart },
     data() {
         return {
-            datacollection: null
+            datacollection: null,
+            store: useStore(),
+            chart_data:null
         }
     },
-    created() {
-        this.fillData()
+    computed: {
+        Chart_Data() {
+            return this.chart_data
+        }
+    },
+    mounted() {
+        this.connect()
+        console.log('mount:', this.Chart_Data)
+        // const store = useStore()
+        // methods.chartConnect().then((res)=> {
+        //     console.log(res)
+        // }).catch(err=> {
+        //     console.log(err)
+        // })
+        
     },
     methods: {
-        fillData() {
-            this.datacollection = {
-                 // Data for the y-axis of the chart
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 
-                'September', 'October', 'November', 'December'],
-                datasets: [
-                    {
-                        label: 'Data One',
-                        backgroundColor: '#f87979',
-                        // Data for the x-axis of the chart
-                        data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                            this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), 
-                            this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
-                    }
-                ]
-            }
+        connect() {
+            methods.chartConnect().then((server)=> {
+                server.onmessage = ({data}) => {
+                    const recv = JSON.parse(data)
+                    const value = Math.floor((recv.value * 100))
+                    console.log(value)
+                    this.storeData(value)
+        
+                    
+                }
+            }).catch(err=> {
+                console.log(err)
+            })
+        
         },
-        getRandomInt() {
-            return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+        storeData(item) {
+           this.store.dispatch('updateValue', item)
+        },
+        getData() {
+            this.chart_data = computed(() => this.store.getters.updatechart)
         }
+        
     }
 
 }

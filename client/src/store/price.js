@@ -1,26 +1,19 @@
-import SYMBOL from '@/store/mutation-types'
-
 const price = {
-    state: () => ({
-        symbol: '',
-        price:0
-    }),
-    
+    state: () => ({ chartvalue: 10 }),
     mutations: {
-        [SYMBOL.SET_NAME](state, value) {
-            state.symbol = value
-        }
-    },
-    getters: {
-        symbolInfo(state) {
-            return `Symbol name: ${state.symbol}, Price: ${state.price}`
-        }
+      UPDATE_CHART(state, value) {
+        state.chartvalue = value;
+      }
     },
     actions: {
-        changeSymbol({commit}, value) {
-            console.log('value test',value)
-            commit(SYMBOL.SET_NAME, value)
-        }
+      updateValue({commit}, value) {
+        commit('UPDATE_CHART', value)
+      }
+    },
+    getters: {
+      updatechart: state =>{
+        return state.chartvalue
+      }
     }
 }
 

@@ -9,6 +9,8 @@
 <script>
 import LineChart from '@/components/Chart/LineChart'
 import methods from '@/assets/js/common.js'
+import { useStore } from 'vuex'
+import {computed} from 'vue'
 export default {
     name: 'LineChartContainer',
     components: { LineChart },
@@ -18,6 +20,7 @@ export default {
             logs:[],
             cbvalue: [90, 10, 20, 30, 50, 10, 30, 40, 60, 100, 20 , 40],
             status:'disconnected',
+            store: useStore()
         }
     }, 
     mounted () {
@@ -28,19 +31,8 @@ export default {
             console.log(e)
         }
     },
-    computed: {
-        comdata() {
-            console.log(this.cbvalue)
-            return this.cbvalue
-        }
-    },
     methods: {
         connect() {
-            methods.chartConnect().then((res)=> {
-                console.log(res)
-            }).catch(err=> {
-                console.log(err)
-            })
             // const ws = new WebSocket('ws://localhost:8000/ws')
             // ws.onopen = () => {
             //     this.status = 'connected'
@@ -61,6 +53,8 @@ export default {
                     
             //     }
             // }
+           this.cbvalue= computed(() => this.store.getters.updatechart)
+
         },
         disconnect() {
             methods.chartDisconnect()

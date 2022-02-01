@@ -2,16 +2,23 @@
     <div class="section-layout" >
         <div class="section-container">
             <chart-section></chart-section>
+            <inform-layout/>
+            <green-button/>
         </div>
     </div>
 </template>
 
 <script>
 import ChartSection from '@/components/layout/Chart/ChartSectionLayout.vue'
+import InformLayout from '@/components/layout/InformLayout'
+import GreenButton from '@/components/common/button/GreenButton'
+
 export default {
     name:"section-layout",
-    components: {ChartSection}
+    components: {ChartSection, InformLayout, GreenButton},
+    mounted() {
 
+    }
 }
 </script>
 
@@ -23,7 +30,8 @@ export default {
     .section-container{
         width:100%;
         height:40rem;
-        background: $secondColor;
+        display:flex;
+        flex-direction: column;
     }
 }
 </style>

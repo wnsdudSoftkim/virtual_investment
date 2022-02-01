@@ -1,6 +1,6 @@
 <template>
   <div>
-      <canvas id="chart" width="400" height="400"></canvas>
+      <canvas id="chart_bar" width="400" height="400"></canvas>
   </div>
 </template>
 
@@ -8,6 +8,7 @@
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
 export default {
+    name:'BarChart',
     props: {
         cbvalue: Number
     },
@@ -51,7 +52,7 @@ export default {
     }),
     methods: {
         fillData() {
-            const ctx = document.getElementById('chart').getContext('2d')
+            const ctx = document.getElementById('chart_bar').getContext('2d')
             this.myChart = new Chart(ctx, {
                 type: 'bar',
                 data: this.chartdata,

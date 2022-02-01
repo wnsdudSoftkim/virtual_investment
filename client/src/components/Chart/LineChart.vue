@@ -8,6 +8,7 @@
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
 export default {
+    name:'LineChart',
     props: {
         cbvalue: Number
     },
