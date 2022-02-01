@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <update-chart
+    <line-chart
       v-if="loaded"
       v-bind:cbvalue="cbvalue"/>
   </div>
 </template>
 
 <script>
-import UpdateChart from '@/components/Chart/UpdateChart'
+import LineChart from '@/components/Chart/LineChart'
 
 export default {
     name: 'LineChartContainer',
-    components: { UpdateChart },
+    components: { LineChart },
     data: function(){
         return {
             loaded: false,

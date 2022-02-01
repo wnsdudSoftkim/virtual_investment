@@ -1,15 +1,31 @@
-<script>
-import {Line} from 'vue3-chart-v2'
-export default {
+<template>
+  <div>
+      <canvas id="chart" width="400" height="400"></canvas>
+  </div>
+</template>
 
-    extends: Line,
+<script>
+import { Chart, registerables } from 'chart.js'
+Chart.register(...registerables)
+export default {
     props: {
-        chartdata : {
-            type: Object,
-            default: null
-        }
+        cbvalue: Array
     },
+
     data: () => ({
+        myvalue: [],
+        chartdata: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
+            'August', 'September', 'October', 'November', 'December'], 
+            datasets:[{
+                label: 'Data One',
+                backgroundColor: '#f87979',
+                pointBackgroundColor: 'white',
+                borderWidth: 1,
+                pointBorderColor: 'red',
+                data: [90, 10, 20, 30, 50, 10, 30, 40, 60, 100, 20 , 40]
+            }]
+        },
         options: {
             scales: {
                 yAxes: [{
@@ -32,10 +48,37 @@ export default {
             },
             responsive: true,
             maintainAspectRatio: false
-        }
+        },
     }),
-    mounted () {
-        this.renderChart(this.chartdata, this.options)
+    methods: {
+        fillData() {
+            const ctx = document.getElementById('chart').getContext('2d')
+            this.myChart = new Chart(ctx, {
+                type: 'line',
+                data: this.chartdata,
+                options:this.options
+                
+            })
+        },
+        addData() {
+            this.myChart.data.datasets[0].data = this.cbvalue
+            this.myChart.update()
+        }
+    },
+    mounted() {
+        this.fillData()
+    },
+    watch: {
+        // cbvalue: function() {
+        //     console.log(this.cbvalue)
+            
+        // }
+        'cbvalue': 'addData'
     }
+
 }
 </script>
+
+<style>
+
+</style>
