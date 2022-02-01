@@ -36,7 +36,11 @@ export default {
     },
     methods: {
         connect() {
-            methods.chartConnect()
+            methods.chartConnect().then((res)=> {
+                console.log(res)
+            }).catch(err=> {
+                console.log(err)
+            })
             // const ws = new WebSocket('ws://localhost:8000/ws')
             // ws.onopen = () => {
             //     this.status = 'connected'
