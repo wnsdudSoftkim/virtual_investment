@@ -33,34 +33,11 @@ export default {
     },
     methods: {
         connect() {
-            // const ws = new WebSocket('ws://localhost:8000/ws')
-            // ws.onopen = () => {
-            //     this.status = 'connected'
-            //     console.log('status:  '+ this.status)
-            //     this.logs.push({event: 'connect complete: ', data: 'ws://localhost:8000/ws'})
-
-            //     setInterval(() => ws.send('echo'), 5000)
-
-            //     ws.onmessage = ({data}) => {
-            //         const recv = JSON.parse(data)
-            //         const value = Math.floor((recv.value * 100))
-            //         console.log(value)
-            //         this.cbvalue = value
-            //         // const copied = this.cbvalue.slice()
-            //         // copied.push(value)
-            //         // this.cbvalue = copied
-            //         this.$forceUpdate()
-                    
-            //     }
-            // }
            this.cbvalue= computed(() => this.store.getters.updatechart)
 
         },
         disconnect() {
             methods.chartDisconnect()
-            // this.socket.close()
-            // this.status = 'disconnected'
-            // this.logs = []
         }
     }
 }

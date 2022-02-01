@@ -51,7 +51,8 @@ export default {
         return {
             datacollection: null,
             store: useStore(),
-            chart_data:null
+            chart_data:null,
+            server:null
         }
     },
     computed: {
@@ -62,18 +63,12 @@ export default {
     mounted() {
         this.connect()
         console.log('mount:', this.Chart_Data)
-        // const store = useStore()
-        // methods.chartConnect().then((res)=> {
-        //     console.log(res)
-        // }).catch(err=> {
-        //     console.log(err)
-        // })
-        
     },
     methods: {
         connect() {
             methods.chartConnect().then((server)=> {
                 server.onmessage = ({data}) => {
+                    this.server = server
                     const recv = JSON.parse(data)
                     const value = Math.floor((recv.value * 100))
                     console.log(value)
@@ -87,12 +82,26 @@ export default {
         
         },
         storeData(item) {
-           this.store.dispatch('updateValue', item)
+            this.store.dispatch('updateValue', item)
         },
         getData() {
             this.chart_data = computed(() => this.store.getters.updatechart)
+        },
+        disconnect() {
+            console.log(this.server)
+            methods.chartDisconnect()
         }
         
+    },
+    beforeRouteLeave(to, from, next) { 
+        const answer = window.confirm('데이터 저장이 되지 않았습니다. 이 페이지를 나가시겠습니까?') 
+        if (answer) { 
+            this.disconnect()
+            next() 
+        } 
+        else { 
+            next(false)
+        }
     }
 
 }
