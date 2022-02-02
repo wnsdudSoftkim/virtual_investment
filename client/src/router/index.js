@@ -10,16 +10,21 @@ const routes= [
         component: ()=> import('@/views/Home')
     },
     {
-        path:'/chartjs',
+        // route config
+        path:'/chart',
         component: () => import('@/views/Chart/VueChartJS')
     },
     {
-        path:'/chartkick',
-        component: () => import('@/views/Chart/VueChartKick')
+        path:'/chart/#progressive',
+        component: () => import('@/views/Chart/VueChartJS')
     },
     {
-        path:'/charts',
-        component: () => import('@/views/Chart/VueCharts')
+        path:'/chart/#line',
+        component: () => import('@/views/fragment/LineFragment.vue')
+    },
+    {
+        path:'/chart/#bar',
+        component: () => import('@/views/fragment/BarFragment.vue')
     },
 ]
 

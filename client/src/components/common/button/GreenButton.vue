@@ -1,5 +1,7 @@
 <template>
-  <button class="btn green-btn">?</button>
+  <button class="btn green-btn">
+    <slot><slot>
+  </button>
 </template>
 
 <script>

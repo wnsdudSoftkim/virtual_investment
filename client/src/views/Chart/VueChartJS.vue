@@ -1,43 +1,28 @@
 <template>
-    <div class="container">
-        <ul>
-            <li>
-                <router-link to='/'>Home</router-link>
-            </li>
-            <li>
-                <router-link to='/chartjs'>vue-chartjs</router-link>
-            </li>
-            <li>
-                <router-link to='/charts'>vue-charts</router-link>
-            </li>
-            <li>
-                <router-link to='/chartKick'>vue-chartKick</router-link>
-            </li>
-        </ul>
-        <h1> Demo example of vue-chartjs </h1>
-        <div class="columns">
-            <div class="column">
-                <h3>Line Chart</h3>
-                <line-chart-container></line-chart-container>
-            </div>
+    <fragment-layout>
+        <fragment-main-block-layout>
+             <h1> Demo example of vue-chartjs </h1>
+            <div class="columns">
                 <div class="column">
-                <h3>Bar Chart</h3>
-                <bar-chart-container></bar-chart-container>
+                    <h3>Line Chart</h3>
+                    <line-chart-container></line-chart-container>
+                </div>
+                    <div class="column">
+                    <h3>Bar Chart</h3>
+                    <bar-chart-container></bar-chart-container>
+                </div>
+                    <div class="column">
+                    <h3>Bubble Chart</h3>
+                    <bubble-chart></bubble-chart>
+                </div>
             </div>
-                <div class="column">
-                <h3>Bubble Chart</h3>
-                <bubble-chart></bubble-chart>
-            </div>
-            <!-- <div class="column">
-                <h3>Reactivity - Live update upon change in datasets</h3>
-                <reactive :chart-data="datacollection"></reactive>
-                <button class="button is-primary" @click="fillData()">Randomize</button>
-            </div> -->
-        </div>
-    </div>
+        </fragment-main-block-layout>
+    </fragment-layout>
 </template>
 
 <script>
+import FragmentLayout from '@/components/layout/FragmentLayout'
+import FragmentMainBlockLayout from '@/components/layout/FragmentMainBlockLayout'
 import LineChartContainer from '@/components/ChartContainer/LineChartContainer'
 import BarChartContainer from '@/components/ChartContainer/BarChartContainer'
 import BubbleChart from '@/components/Chart/BubbleChart'
@@ -46,7 +31,7 @@ import {computed} from 'vue'
 import methods from '@/assets/js/common.js'
 export default {
     name:'VueChartJS',
-    components: { LineChartContainer, BarChartContainer, BubbleChart },
+    components: { LineChartContainer, BarChartContainer, BubbleChart , FragmentLayout, FragmentMainBlockLayout },
     data() {
         return {
             datacollection: null,
@@ -94,14 +79,16 @@ export default {
         
     },
     beforeRouteLeave(to, from, next) { 
-        const answer = window.confirm('데이터 저장이 되지 않았습니다. 이 페이지를 나가시겠습니까?') 
-        if (answer) { 
-            this.disconnect()
-            next() 
-        } 
-        else { 
-            next(false)
-        }
+        this.disconnect()
+        next() 
+        // const answer = window.confirm('데이터 저장이 되지 않았습니다. 이 페이지를 나가시겠습니까?') 
+        // if (answer) { 
+        //     this.disconnect()
+        //     next() 
+        // } 
+        // else { 
+        //     next(false)
+        // }
     }
 
 }
