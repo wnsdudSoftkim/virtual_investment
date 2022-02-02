@@ -1,12 +1,12 @@
 <template>
   <button class="btn green-btn">
-    <slot><slot>
+    <slot></slot>
   </button>
 </template>
 
 <script>
 export default {
-
+  name:'green-button',
 }
 </script>
 

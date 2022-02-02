@@ -4,12 +4,6 @@
         <li class="chart-li">
             <router-link to="/chart" class="chart-router">vue-chartjs</router-link>
         </li>
-        <li class="chart-li">
-            <router-link to="/charts" class="chart-router">vue-charts</router-link>
-        </li>
-        <li class="chart-li">
-            <router-link to="/chartKick" class="chart-router">vue-chartKick</router-link>
-        </li>
     </ul>
 
 </template>

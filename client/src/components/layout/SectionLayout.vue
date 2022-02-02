@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ChartSection from '@/components/layout/Chart/ChartSectionLayout.vue'
+import ChartSection from '@/components/layout/ChartSectionLayout.vue'
 import InformLayout from '@/components/layout/InformLayout'
 import GreenButton from '@/components/common/button/GreenButton'
 

@@ -3,14 +3,14 @@
         <green-button>
              <router-link to='/'>Home</router-link>
         </green-button>
-        <green-button>
-            <router-link to='/chart/#progressvie'>progressvie</router-link>
+        <green-button @click='onClick(1)'>
+            progressvie
         </green-button>
-        <green-button>
-            <router-link to='/chart/#line'>line</router-link>
+        <green-button @click='onClick(2)'>
+            line
         </green-button>
-        <green-button>
-           <router-link to='/chart/#bar'>bar</router-link>
+        <green-button @click='onClick(3)'>
+           bar
         </green-button>
     </div>
   
@@ -18,9 +18,20 @@
 
 <script>
 import GreenButton from '@/components/common/button/GreenButton'
+import { useStore } from 'vuex'
 export default {
     name:'fragment-header',
-    component: {GreenButton}
+    components: {GreenButton},
+    data() {
+        return {
+            store:useStore()
+        }
+    },
+    methods: {
+        onClick(value) {
+            this.store.dispatch('updateHeader', value)
+        }
+    },
 }
 </script>
 

@@ -1,19 +1,19 @@
 <template>
     <fragment-layout>
         <fragment-main-block-layout>
-             <h1> Demo example of vue-chartjs </h1>
+            <h1> Demo example of vue-chartjs </h1>
             <div class="columns">
-                <div class="column">
+                <div class="column" v-if="this.headervalue == 1" >
+                    <h3>Bubble Chart</h3>
+                    <bubble-chart></bubble-chart>
+                </div>
+                <div class="column" v-if="this.headervalue == 2">
                     <h3>Line Chart</h3>
                     <line-chart-container></line-chart-container>
                 </div>
-                    <div class="column">
+                    <div class="column" v-if="this.headervalue == 3" >
                     <h3>Bar Chart</h3>
                     <bar-chart-container></bar-chart-container>
-                </div>
-                    <div class="column">
-                    <h3>Bubble Chart</h3>
-                    <bubble-chart></bubble-chart>
                 </div>
             </div>
         </fragment-main-block-layout>
@@ -37,12 +37,16 @@ export default {
             datacollection: null,
             store: useStore(),
             chart_data:null,
-            server:null
+            server:null,
+            headervalue:null
         }
     },
     computed: {
         Chart_Data() {
             return this.chart_data
+        },
+        check_header() {
+            return this.store.getters.updateheader
         }
     },
     mounted() {
@@ -81,14 +85,11 @@ export default {
     beforeRouteLeave(to, from, next) { 
         this.disconnect()
         next() 
-        // const answer = window.confirm('데이터 저장이 되지 않았습니다. 이 페이지를 나가시겠습니까?') 
-        // if (answer) { 
-        //     this.disconnect()
-        //     next() 
-        // } 
-        // else { 
-        //     next(false)
-        // }
+    },
+    watch: {
+        check_header(val) {
+            this.headervalue = val
+        }
     }
 
 }
