@@ -13,6 +13,9 @@
             line
         </green-button>
         <green-button @click='onClick(4)'>
+            bubble
+        </green-button>
+        <green-button @click='onClick(5)'>
            bar
         </green-button>
     </div>
