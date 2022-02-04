@@ -4,14 +4,18 @@
             <h1> Demo example of vue-chartjs </h1>
             <div class="columns">
                 <div class="column" v-if="this.headervalue == 1" >
-                    <h3>Bubble Chart</h3>
-                    <bubble-chart></bubble-chart>
+                    <h3>Base</h3>
+                    <progressive-chart-container></progressive-chart-container>
                 </div>
-                <div class="column" v-if="this.headervalue == 2">
+                <div class="column" v-if="this.headervalue == 2" >
+                    <h3>Progressive Chart</h3>
+                    <progressive-chart-container></progressive-chart-container>
+                </div>
+                <div class="column" v-if="this.headervalue == 3">
                     <h3>Line Chart</h3>
                     <line-chart-container></line-chart-container>
                 </div>
-                    <div class="column" v-if="this.headervalue == 3" >
+                    <div class="column" v-if="this.headervalue == 4" >
                     <h3>Bar Chart</h3>
                     <bar-chart-container></bar-chart-container>
                 </div>
@@ -24,14 +28,14 @@
 import FragmentLayout from '@/components/layout/FragmentLayout'
 import FragmentMainBlockLayout from '@/components/layout/FragmentMainBlockLayout'
 import LineChartContainer from '@/components/ChartContainer/LineChartContainer'
+import ProgressiveChartContainer from '@/components/ChartContainer/ProgressiveChartContainer'
 import BarChartContainer from '@/components/ChartContainer/BarChartContainer'
-import BubbleChart from '@/components/Chart/BubbleChart'
 import { useStore } from 'vuex'
 import {computed} from 'vue'
 import methods from '@/assets/js/common.js'
 export default {
     name:'VueChartJS',
-    components: { LineChartContainer, BarChartContainer, BubbleChart , FragmentLayout, FragmentMainBlockLayout },
+    components: { LineChartContainer, BarChartContainer, ProgressiveChartContainer , FragmentLayout, FragmentMainBlockLayout },
     data() {
         return {
             datacollection: null,
@@ -50,6 +54,7 @@ export default {
         }
     },
     mounted() {
+        this.headervalue = 1
         this.connect()
         console.log('mount:', this.Chart_Data)
     },

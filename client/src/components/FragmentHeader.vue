@@ -4,12 +4,15 @@
              <router-link to='/'>Home</router-link>
         </green-button>
         <green-button @click='onClick(1)'>
-            progressvie
+            base
         </green-button>
         <green-button @click='onClick(2)'>
-            line
+            progressvie
         </green-button>
         <green-button @click='onClick(3)'>
+            line
+        </green-button>
+        <green-button @click='onClick(4)'>
            bar
         </green-button>
     </div>

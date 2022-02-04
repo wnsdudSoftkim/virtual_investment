@@ -1,0 +1,131 @@
+<template>
+  <div>
+      <canvas id="chart_progressive" width="800" height="400"></canvas>
+  </div>
+</template>
+
+<script>
+import { Chart, registerables } from 'chart.js'
+Chart.register(...registerables)
+export default {
+    name:'LineChart',
+    props: {
+        cbvalue: Number
+    },
+
+    data: () => ({
+        data:[],
+        data2:[],
+        animation:null,
+       
+        
+    }),
+    methods: {
+        fillData() {
+            const ctx = document.getElementById('chart_progressive').getContext('2d')
+            const chartdata= {
+                datasets: [{
+                    borderColor:'red',
+                    borderWidth: 1,
+                    radius: 0,
+                    data: this.data,
+                },{
+                    borderColor:'blue',
+                    borderWidth: 1,
+                    radius: 0,
+                    data: this.data2,
+                }]
+            }
+            const options= {
+                animation:this.animation,
+                interaction: {
+                    intersect: false
+                },
+                plugins: {
+                    legend: false
+                },
+                responsive: false,
+                scales: {
+                    x: {
+                        type: 'linear'
+                    }
+                }
+            }
+            this.myChart = new Chart(ctx, {
+                type: 'line',
+                data: chartdata,
+                options:options
+                
+            })
+        },
+        addData() {
+            // this.myChart.data.datasets[0].data = this.cbvalue
+            // this.myChart.update()
+            this.myChart.data.datasets[0].data = this.myChart.data.datasets[0].data.concat([this.cbvalue])
+            this.myChart.data.labels= this.myChart.data.labels.concat(['sample'])
+            
+            this.myChart.update()
+        },
+        prepareData() {
+            let prev = 100;
+            let prev2 = 80;
+            for (let i = 0; i < 100; i++) {
+                prev += 5 - Math.random() * 10;
+                this.data.push({x: i, y: prev});
+                prev2 += 5 - Math.random() * 10;
+                this.data2.push({x: i, y: prev2});
+            }
+        },
+        animationMethod() {
+            const totalDuration = 10000;
+            const delayBetweenPoints = totalDuration / 100;
+            const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+            this.animation = {
+            x: {
+                type: 'number',
+                easing: 'linear',
+                duration: delayBetweenPoints,
+                from: NaN, // the point is initially skipped
+                delay(ctx) {
+                if (ctx.type !== 'data' || ctx.xStarted) {
+                    return 0;
+                }
+                ctx.xStarted = true;
+                return ctx.index * delayBetweenPoints;
+                }
+            },
+            y: {
+                type: 'number',
+                easing: 'linear',
+                duration: delayBetweenPoints,
+                from: previousY,
+                delay(ctx) {
+                if (ctx.type !== 'data' || ctx.yStarted) {
+                    return 0;
+                }
+                ctx.yStarted = true;
+                return ctx.index * delayBetweenPoints;
+                }
+            }
+            };
+        }
+    },
+    mounted() {
+        this.prepareData()
+        this.animationMethod()
+        this.fillData()
+    },
+    watch: {
+        // cbvalue: function() {
+        //     console.log(this.cbvalue)
+            
+        // }
+        'cbvalue': 'addData'
+    }
+
+}
+</script>
+
+<style>
+
+</style>
