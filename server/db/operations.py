@@ -33,7 +33,6 @@ class Operator(object):
     @staticmethod
     async def delete(collection: str, condition: dict):
         db = get_mongo_db()
-        collection = Settings.COLLECTION_NAME
 
         await db[collection].delete_one(condition)
         return condition.get('_id')

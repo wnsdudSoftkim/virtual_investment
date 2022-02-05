@@ -54,14 +54,14 @@ async def _get_binance_data(start_date, end_date, symbol, columns):
             break
         data.extend(js)
         start = js[-1][0] + 60000
-        if not data:
-            print('no data')
-            return
-        df = pd.DataFrame(data)
-        df.columns = columns
-        df['Open_time'] = df.apply(lambda x: datetime.fromtimestamp(x['Open_time'] // 1000), axis=1)
-        df = df.drop(columns=['Close_time', 'ignore'])
-        df['Symbol'] = symbol
-        df.loc[:, 'Open':'tb_quote_av'] = df.loc[:, 'Open':'tb_quote_av'].astype(float)  # string to float
-        df['trades'] = df['trades'].astype(int)
-        return df
+    if not data:
+        print('no data')
+        return
+    df = pd.DataFrame(data)
+    df.columns = columns
+    df['Open_time'] = df.apply(lambda x: datetime.fromtimestamp(x['Open_time'] // 1000).isoformat(), axis=1)
+    df = df.drop(columns=['Close_time', 'ignore'])
+    df['Symbol'] = symbol
+    df.loc[:, 'Open':'tb_quote_av'] = df.loc[:, 'Open':'tb_quote_av'].astype(float)  # string to float
+    df['trades'] = df['trades'].astype(int)
+    return df
