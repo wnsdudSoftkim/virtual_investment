@@ -1,5 +1,6 @@
 <template>
     <fragment-layout>
+        <reset-button>aa</reset-button>
         <fragment-main-block-layout>
             <div class="columns">
                 <div class="column" v-if="this.headervalue == 1" >
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+import ResetButton from '@/components/common/button/ResetButton'
 import FragmentLayout from '@/components/layout/FragmentLayout'
 import FragmentMainBlockLayout from '@/components/layout/FragmentMainBlockLayout'
 import LineChartContainer from '@/components/ChartContainer/LineChartContainer'
@@ -40,7 +42,7 @@ import {computed} from 'vue'
 import methods from '@/assets/js/common.js'
 export default {
     name:'VueChartJS',
-    components: { BaseContainer, LineChartContainer, BarChartContainer, BubbleChartContainer, ProgressiveChartContainer , FragmentLayout, FragmentMainBlockLayout },
+    components: { ResetButton, BaseContainer, LineChartContainer, BarChartContainer, BubbleChartContainer, ProgressiveChartContainer , FragmentLayout, FragmentMainBlockLayout },
     data() {
         return {
             datacollection: null,
@@ -79,6 +81,9 @@ export default {
                 console.log(err)
             })
         
+        },
+        sendData(message) { // receive from store value
+            methods.sendMessage(message)
         },
         storeData(item) {
             this.store.dispatch('updateValue', item)

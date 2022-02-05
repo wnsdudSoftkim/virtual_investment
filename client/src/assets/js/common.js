@@ -21,6 +21,11 @@ const methods = { // eslint-disable-line no-unused-vars
             }
         })
     },
+    sendMessage:(message) => {
+        socket.send(message)
+        logs.push({event: 'send message: ', data: message})
+
+    },
     chartDisconnect: () => {
         socket.onclose = function () {
             clearInterval(interval);
