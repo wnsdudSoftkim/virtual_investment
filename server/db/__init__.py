@@ -3,6 +3,7 @@ from config.config import mongodb_service_local_uri, Settings
 from pydantic import BaseModel, Field
 from bson import ObjectId
 from fastapi.logger import logger
+from typing import Optional
 
 
 class Database:
@@ -29,6 +30,7 @@ def close_db():
 def get_mongo_db():
     return database.db
 
+
 class PyObjectId(ObjectId):
 
     @classmethod
@@ -44,3 +46,12 @@ class PyObjectId(ObjectId):
     @classmethod
     def __modify_schema__(cls, field_schema):
         field_schema.update(type='string')
+
+
+class BaseMongoDBModel(BaseModel):
+    id: Optional[PyObjectId] = Field(alias="_id")
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        allow_population_by_field_name = True

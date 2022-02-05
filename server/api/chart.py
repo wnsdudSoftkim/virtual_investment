@@ -14,7 +14,9 @@ async def get_chart_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
         try:
+            print('test1')
             await websocket.receive_text()
+            print('test2')
             resp = {'value': random.uniform(0, 1)}
             await websocket.send_json(resp)
         except Exception as exc_info:

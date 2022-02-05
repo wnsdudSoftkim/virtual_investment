@@ -1,23 +1,19 @@
 from db import get_mongo_db
 from config.config import Settings
-
+from typing import List, Any
 
 class Operator(object):
 
     @staticmethod
-    async def get(condition: dict, projection: dict):
+    async def get(collection: str, condition: dict, projection: dict):
         db = get_mongo_db()
-        collection = Settings.COLLECTION_NAME
         if condition is None:
             condition = {}
-
-        print(db[collection])
         return await db[collection].find_one(condition, projection)
 
     @staticmethod
-    async def update(condition: dict, field: dict):
+    async def update(collection: str, condition: dict, field: dict):
         db = get_mongo_db()
-        collection = Settings.COLLECTION_NAME
 
         if condition is None:
             condition = {}
@@ -27,19 +23,33 @@ class Operator(object):
         return condition.get('_id')
 
     @staticmethod
-    async def create(field: dict):
+    async def create(collection: str, field: dict):
         db = get_mongo_db()
-        collection = Settings.COLLECTION_NAME
-
         if len(field) == 0:
             return 0
         await db[collection].insert_one(field)
         return field.get('_id')
 
     @staticmethod
-    async def delete(condition: dict):
+    async def delete(collection: str, condition: dict):
         db = get_mongo_db()
         collection = Settings.COLLECTION_NAME
 
         await db[collection].delete_one(condition)
         return condition.get('_id')
+
+    @staticmethod
+    async def aggregate(collection: str,
+                        pipeline: List[Any] = None):
+        db = get_mongo_db()
+
+        if pipeline is None:
+            pipeline = []
+        results = []
+        try:
+            results = db[collection].aggregate(pipeline)
+            results = [result async for result in results]
+        except Exception as exc_info:
+            print("error occur: ", exc_info)
+
+        return results
