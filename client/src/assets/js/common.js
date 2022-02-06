@@ -7,15 +7,9 @@ const methods = { // eslint-disable-line no-unused-vars
             socket = new WebSocket('ws://localhost:8000/ws')
             socket.onopen = () => {
                 logs.push({event: 'connect complete: ', data: 'ws://localhost:8000/ws'})
-                clearInterval(interval)
-                interval = setInterval(() => socket.send(0), 4000)
+
+                socket.send("2017-08-17T13:00:00") // 초기값은 BaseChart에서 입력받고 send해주면 통신 시작되는 것으로 바꾸기
                 resolve(socket)
-                // socket.onmessage = ({data}) => {
-                //     const recv = JSON.parse(data)
-                //     const value = Math.floor((recv.value * 100))
-                //     resolve(value)
-                    
-                // }
             }
             socket.onerror = (err) => {
                 reject(err)
@@ -25,11 +19,9 @@ const methods = { // eslint-disable-line no-unused-vars
     sendMessage:(message) => {
         if (message === 1) {
             socket.send(1)
-            clearInterval(interval)
         }
         else {
-            clearInterval(interval)
-            interval = setInterval(() => socket.send(message), 4000)
+            setTimeout(()=> socket.send(message),2000)
         }
         logs.push({event: 'send message: ', data: message})
 

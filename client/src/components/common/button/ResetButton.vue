@@ -22,16 +22,13 @@ export default {
             this.button_flag = !this.button_flag
             console.log(message)
             console.log(this.button_flag)
-            if (this.button_flag === false) {
-             methods.sendMessage(0)
+            if (this.button_flag === true) {
+              methods.sendMessage(1)
+            }else {
+              methods.sendMessage(message)
             }
-            else {
-              if (message !== null) {
-                methods.sendMessage(message)
-              }else {
-                methods.sendMessage(1)
-              }
-            }
+           
+           
         }
     } 
 }

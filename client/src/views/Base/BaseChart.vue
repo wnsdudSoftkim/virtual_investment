@@ -72,14 +72,10 @@ export default {
                 server.onmessage = ({data}) => {
                     this.server = server
                     const recv = JSON.parse(data)
-                    // const value = Math.floor((recv.value * 100))
-                    // console.log(value)
-                    // this.storeData(value)
-                    console.log(recv)
-                    this.count += recv.length
+                    this.count = recv.length
                     this.storePrice(recv)
-                    console.log(recv[this.count-1]['x'])
                     this.storeDate(recv[this.count-1]['x'])
+                    this.sendData(recv[(this.count)-1]['x'])
         
                     
                 }
@@ -91,6 +87,7 @@ export default {
         sendData(message) { // receive from store value
             methods.sendMessage(message)
         },
+        
         storePrice(item) {
             // this.store.dispatch('updateValue', item)
             this.store.dispatch('updatePrice', item)
