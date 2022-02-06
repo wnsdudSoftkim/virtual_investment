@@ -21,9 +21,9 @@ async def get_chart_endpoint(websocket: WebSocket):
             }
         },
         {
-            '$match': {'Open_time': {'$gte': "2017-08-18 10:03:46.000Z"}}
+            '$match': {'Open_time': {'$gte': "2017-08-17 10:03:46.000Z"}}
         }, {
-            '$limit': 100
+            '$limit': 30
         }, {
             '$project': project
         },
@@ -36,11 +36,9 @@ async def get_chart_endpoint(websocket: WebSocket):
             print('prepare send')
             receive_txt = await websocket.receive_text()
             print(receive_txt)
-            if receive_txt == '0':
-                res = await op.aggregate('b_2017', pipeline=pipeline)
-                await websocket.send_json(res)
-                print('send complete')
-            elif receive_txt != '0' and receive_txt != '1':
+            if receive_txt == '1':
+                pass
+            else:
                 pipeline[1]['$match']['Open_time']['$gte'] = receive_txt
                 res = await op.aggregate('b_2017', pipeline=pipeline)
                 await websocket.send_json(res)
