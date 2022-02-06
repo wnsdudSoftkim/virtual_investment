@@ -11,19 +11,17 @@
       <div class="form--container -inline">
         <div class="form--field -short">
           <label>Product Rating *</label>
-          <date-picker></date-picker>
-         <!-- <el-date-picker
-            v-model="startDate"
-            type="date"
-            placeholder="시작일"
-            value-format="yyyyMMdd"
-            @change="changeDate('start')"
-            :picker-options="startDateOptions"></el-date-picker> -->
+          <date-picker v-model="pickedDate"></date-picker>
         </div>
         <div class="form--field -short">
           <label>Product Price *</label>
           <span class="form--price">$</span>
-          <input type="text" class="form--element" name="price" v-model="productData.price" placeholder="Price" required="" min="0" max="500" pattern="\d+(\.\d{2})?">
+          <select v-model="productData.symbol">
+              <option value="0">BTC</option>
+              <option value="1">A</option>
+              <option value="2">B</option>
+              <option value="3">B</option>
+          </select>
         </div>
         <div class="form--field -short">
           <label>List Price *</label>
@@ -53,19 +51,30 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import DatePicker from '@/components/common/datepicker/DatePicker'
 export default {
     name:'BasicModal',
     components: {DatePicker},
+    computed: {
+      PAYLOAD() {
+        return this.productData
+      },
+      SYMBOL() {
+        return this.productData.symbol
+      }
+    },
     data: ()=> ({
         formOpen:false,
         productData: {
             title: '',
             rating: '',
             price: '',
-            list_price: '',
-            is_featured: false
-        }
+            symbol: '',
+            is_featured: false,
+            pickedDate:''
+        },
+        pickedDate: ref(new Date())
     }),
     methods: {
         resetForm() {
@@ -80,6 +89,8 @@ export default {
         cancel() {
             this.formOpen = false
             this.resetForm()
+            console.log(this.pickedDate.toISOString())
+            console.log(this.SYMBOL)
         },
         submitForm() {
           console.log(this.productData.title)

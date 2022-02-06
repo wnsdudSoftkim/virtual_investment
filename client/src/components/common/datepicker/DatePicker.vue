@@ -1,13 +1,12 @@
 <script setup>
 import Datepicker from 'vue3-datepicker'
-import { ref } from 'vue'
-const pickedDate = ref(new Date())
+
+
 </script>
 
 <template>
   <datepicker
     class="pick_input"
-    v-model="pickedDate"
   >
   </datepicker>
 </template>
