@@ -1,0 +1,13 @@
+.headerText {
+    font-size:2rem;
+    color:$baseColor;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+}
+.headerSubText {
+    font-size:1rem;
+    color:$secondColor;
+    display: flex;
+    justify-content: space-between;
+}
