@@ -4,16 +4,34 @@
 </template>
 
 <script>
+import methods from '@/assets/js/common.js'
+import {useStore} from 'vuex'
 export default {
+    
     name:'ResetButton',
     data: ()=> ({
         button_flag: false,
-        button_value: "STOP"
+        button_value: "STOP",
+        store: useStore()
     }),
     methods: {
         changeButtonValue() {
+            let message = this.store.getters.updatelastdate
+            console.log(message)
             this.button_value = this.button_flag ? "STOP" : "START"
             this.button_flag = !this.button_flag
+            console.log(message)
+            console.log(this.button_flag)
+            if (this.button_flag === false) {
+             methods.sendMessage(0)
+            }
+            else {
+              if (message !== null) {
+                methods.sendMessage(message)
+              }else {
+                methods.sendMessage(1)
+              }
+            }
         }
     } 
 }

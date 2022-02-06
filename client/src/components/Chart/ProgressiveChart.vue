@@ -10,7 +10,7 @@ Chart.register(...registerables)
 export default {
     name:'LineChart',
     props: {
-        cbvalue: Number
+        cbvalue: Array
     },
 
     data: () => ({
@@ -29,11 +29,6 @@ export default {
                     borderWidth: 1,
                     radius: 0,
                     data: this.data,
-                },{
-                    borderColor:'blue',
-                    borderWidth: 1,
-                    radius: 0,
-                    data: this.data2,
                 }]
             }
             const options= {
@@ -46,9 +41,13 @@ export default {
                 },
                 responsive: false,
                 scales: {
-                    x: {
-                        type: 'linear'
-                    }
+                    // x: {
+                    //     type: 'linear'
+                    // }
+                    // myScale: {
+                    //     type: 'logarithmic',
+                    //     position: 'right', // `axis` is determined by the position as `'y'`
+                    // }
                 }
             }
             this.myChart = new Chart(ctx, {
@@ -61,23 +60,22 @@ export default {
         addData() {
             // this.myChart.data.datasets[0].data = this.cbvalue
             // this.myChart.update()
-            this.myChart.data.datasets[0].data = this.myChart.data.datasets[0].data.concat([this.cbvalue])
-            this.myChart.data.labels= this.myChart.data.labels.concat(['sample'])
-            
+            this.myChart.data.datasets[0].data = this.myChart.data.datasets[0].data.concat(this.cbvalue)
+            console.log(this.myChart.data.datasets[0].data)
             this.myChart.update()
         },
-        prepareData() {
-            let prev = 100;
-            let prev2 = 80;
-            for (let i = 0; i < 100; i++) {
-                prev += 5 - Math.random() * 10;
-                this.data.push({x: i, y: prev});
-                prev2 += 5 - Math.random() * 10;
-                this.data2.push({x: i, y: prev2});
-            }
-        },
+        // prepareData() {
+        //     let prev = 100;
+        //     let prev2 = 80;
+        //     for (let i = 0; i < 100; i++) {
+        //         prev += 5 - Math.random() * 10;
+        //         this.data.push({x: i, y: prev});
+        //         prev2 += 5 - Math.random() * 10;
+        //         this.data2.push({x: i, y: prev2});
+        //     }
+        // },
         animationMethod() {
-            const totalDuration = 10000;
+            const totalDuration = 1000;
             const delayBetweenPoints = totalDuration / 100;
             const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
             this.animation = {
@@ -87,11 +85,11 @@ export default {
                 duration: delayBetweenPoints,
                 from: NaN, // the point is initially skipped
                 delay(ctx) {
-                if (ctx.type !== 'data' || ctx.xStarted) {
-                    return 0;
-                }
-                ctx.xStarted = true;
-                return ctx.index * delayBetweenPoints;
+                    if (ctx.type !== 'data' || ctx.xStarted) {
+                        return 0;
+                    }
+                    ctx.xStarted = true;
+                    return ctx.index * delayBetweenPoints;
                 }
             },
             y: {
@@ -100,18 +98,18 @@ export default {
                 duration: delayBetweenPoints,
                 from: previousY,
                 delay(ctx) {
-                if (ctx.type !== 'data' || ctx.yStarted) {
-                    return 0;
-                }
-                ctx.yStarted = true;
-                return ctx.index * delayBetweenPoints;
+                    if (ctx.type !== 'data' || ctx.yStarted) {
+                        return 0;
+                    }
+                    ctx.yStarted = true;
+                    return ctx.index * delayBetweenPoints;
                 }
             }
             };
         }
     },
     mounted() {
-        this.prepareData()
+        // this.prepareData()
         this.animationMethod()
         this.fillData()
     },

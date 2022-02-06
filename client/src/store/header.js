@@ -1,4 +1,4 @@
-const price = {
+const header = {
     state: () => ({ headervalue: 0 }),
     mutations: {
       UPDATE_HEADER(state, value) {
@@ -17,4 +17,4 @@ const price = {
     }
 }
 
-export default price
+export default header

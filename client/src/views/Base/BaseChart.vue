@@ -49,7 +49,8 @@ export default {
             store: useStore(),
             chart_data:null,
             server:null,
-            headervalue:null
+            headervalue:null,
+            count:0
         }
     },
     computed: {
@@ -71,9 +72,14 @@ export default {
                 server.onmessage = ({data}) => {
                     this.server = server
                     const recv = JSON.parse(data)
-                    const value = Math.floor((recv.value * 100))
-                    console.log(value)
-                    this.storeData(value)
+                    // const value = Math.floor((recv.value * 100))
+                    // console.log(value)
+                    // this.storeData(value)
+                    console.log(recv)
+                    this.count += recv.length
+                    this.storePrice(recv)
+                    console.log(recv[this.count-1]['x'])
+                    this.storeDate(recv[this.count-1]['x'])
         
                     
                 }
@@ -85,8 +91,12 @@ export default {
         sendData(message) { // receive from store value
             methods.sendMessage(message)
         },
-        storeData(item) {
-            this.store.dispatch('updateValue', item)
+        storePrice(item) {
+            // this.store.dispatch('updateValue', item)
+            this.store.dispatch('updatePrice', item)
+        },
+        storeDate(item) {
+            this.store.dispatch('updateLastDate', item)
         },
         getData() {
             this.chart_data = computed(() => this.store.getters.updatechart)

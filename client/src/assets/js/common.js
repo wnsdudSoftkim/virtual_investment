@@ -7,7 +7,8 @@ const methods = { // eslint-disable-line no-unused-vars
             socket = new WebSocket('ws://localhost:8000/ws')
             socket.onopen = () => {
                 logs.push({event: 'connect complete: ', data: 'ws://localhost:8000/ws'})
-                interval = setInterval(() => socket.send('echo'), 4000)
+                clearInterval(interval)
+                interval = setInterval(() => socket.send(0), 4000)
                 resolve(socket)
                 // socket.onmessage = ({data}) => {
                 //     const recv = JSON.parse(data)
@@ -22,7 +23,14 @@ const methods = { // eslint-disable-line no-unused-vars
         })
     },
     sendMessage:(message) => {
-        socket.send(message)
+        if (message === 1) {
+            socket.send(1)
+            clearInterval(interval)
+        }
+        else {
+            clearInterval(interval)
+            interval = setInterval(() => socket.send(message), 4000)
+        }
         logs.push({event: 'send message: ', data: message})
 
     },

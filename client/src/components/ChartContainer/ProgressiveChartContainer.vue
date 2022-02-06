@@ -2,7 +2,7 @@
   <div class="container">
     <progressive-chart
       v-if="loaded"
-      v-bind:cbvalue="cbvalue"/>
+      v-bind:cbvalue="CBVALUE"/>
   </div>
 </template>
 
@@ -10,7 +10,6 @@
 import ProgressiveChart from '@/components/Chart/ProgressiveChart'
 import methods from '@/assets/js/common.js'
 import { useStore } from 'vuex'
-import {computed} from 'vue'
 export default {
     name: 'ProgressiveChartContainer',
     components: { ProgressiveChart },
@@ -24,21 +23,22 @@ export default {
         }
     }, 
     mounted () {
-        this.connect()
         try {
             this.loaded = true
         }catch(e) {
             console.log(e)
         }
     },
+    computed: {
+        CBVALUE() {
+            return this.store.getters.updateprice
+        }
+        // this.cbvalue = this.store.getters.updateprice
+    },
     methods: {
-        connect() {
-           this.cbvalue= computed(() => this.store.getters.updatechart)
-
-        },
         disconnect() {
             methods.chartDisconnect()
         }
-    }
+    },
 }
 </script>
