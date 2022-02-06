@@ -1,15 +1,15 @@
 <template>
     <div class="base-layout">
         <slot></slot>
-        <main-footer></main-footer>
+        <footer-container></footer-container>
     </div>
 </template>
 
 <script>
-import MainFooter from '@/components/Footer'
+import FooterContainer from '@/components/Container/FooterContainer'
 export default {
     name:'base-layout',
-    components: {MainFooter}
+    components: {FooterContainer}
 }
 </script>
 

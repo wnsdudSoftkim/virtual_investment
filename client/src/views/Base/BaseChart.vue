@@ -1,6 +1,7 @@
 <template>
     <fragment-layout>
         <reset-button>aa</reset-button>
+        <div>시작금액: {{this.firstAsset}} 현재금액: {{this.nowAsset}} 수익률: {{this.profitRate}}%</div>
         <fragment-main-block-layout>
             <div class="columns">
                 <div class="column" v-if="this.headervalue == 1" >
@@ -50,7 +51,10 @@ export default {
             chart_data:null,
             server:null,
             headervalue:null,
-            count:0
+            count:0,
+            firstAsset:10000,
+            nowAsset:0,
+            profitRate:0
         }
     },
     computed: {
@@ -72,12 +76,19 @@ export default {
                 server.onmessage = ({data}) => {
                     this.server = server
                     const recv = JSON.parse(data)
-                    this.count = recv.length
-                    this.storePrice(recv)
-                    this.storeDate(recv[this.count-1]['x'])
-                    this.sendData(recv[(this.count)-1]['x'])
-        
-                    
+
+                    const recv_res = recv['res']
+
+                    const recv_other = recv['other_res']
+                    this.count = recv_res.length
+                    this.storePrice(recv_res)
+                    this.storeDate(recv_res[this.count-1]['x'])
+                    this.sendData(recv_res[(this.count)-1]['x'])
+                    this.storeTrade(recv_other['trades'])
+                    this.storeVolume(recv_other['Volume'])
+                    this.nowAsset = recv_other['Open']
+                    this.profitRate = (((this.nowAsset-this.firstAsset)/this.firstAsset) * 100).toFixed(2)
+                    this.storeprofitRate(this.profitRate)
                 }
             }).catch(err=> {
                 console.log(err)
@@ -87,13 +98,21 @@ export default {
         sendData(message) { // receive from store value
             methods.sendMessage(message)
         },
-        
+        storeTrade(item) {
+            this.store.dispatch('updateTrade', item)
+        },
+        storeVolume(item) {
+            this.store.dispatch('updateVolume', item)
+        },
         storePrice(item) {
             // this.store.dispatch('updateValue', item)
             this.store.dispatch('updatePrice', item)
         },
         storeDate(item) {
             this.store.dispatch('updateLastDate', item)
+        },
+        storeprofitRate(item) {
+            this.store.dispatch('updateProfitRate', item)
         },
         getData() {
             this.chart_data = computed(() => this.store.getters.updatechart)

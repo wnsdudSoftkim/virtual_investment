@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import FragmentHeader from '@/components/FragmentHeader'
+import FragmentHeader from '@/components/layout/FragmentHeader'
 export default {
     components: {FragmentHeader}
 }
