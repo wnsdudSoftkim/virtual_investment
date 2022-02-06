@@ -34,4 +34,12 @@ async def sample_router():
 
 @router.get('/index-oper')
 async def sample_oper():
-   res = await op.get('b_2017', {'Open_time':''})
+    pipeline=[
+        {
+            '$match': {'Open_time': {'$gte': "2017-08-18 10:03:46.000Z"}}
+        }, {
+            '$limit': 1000
+        }
+    ]
+    res = await op.aggregate('b_2017', pipeline=pipeline)
+    print(res[0])
