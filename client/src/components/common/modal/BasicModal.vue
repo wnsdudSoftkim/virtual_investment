@@ -2,7 +2,7 @@
 <div class="modal_container" id="app">
   <div class="add-product" :class="{'open': formOpen}">
     <div class="button-copy" v-show="!formOpen" @click="formOpen = true">Add Product</div>
-    <form @submit="cancel()">
+    <form @submit="submitForm">
 
       <div class="form--field">
         <label>Product Title *</label>
@@ -11,7 +11,14 @@
       <div class="form--container -inline">
         <div class="form--field -short">
           <label>Product Rating *</label>
-          <input type="number" class="form--element" name="rating" v-model="productData.rating" placeholder="Rating" required="" min="0" max="5" step="0.5">
+          <date-picker></date-picker>
+         <!-- <el-date-picker
+            v-model="startDate"
+            type="date"
+            placeholder="시작일"
+            value-format="yyyyMMdd"
+            @change="changeDate('start')"
+            :picker-options="startDateOptions"></el-date-picker> -->
         </div>
         <div class="form--field -short">
           <label>Product Price *</label>
@@ -46,8 +53,10 @@
 </template>
 
 <script>
+import DatePicker from '@/components/common/datepicker/DatePicker'
 export default {
     name:'BasicModal',
+    components: {DatePicker},
     data: ()=> ({
         formOpen:false,
         productData: {
@@ -71,7 +80,10 @@ export default {
         cancel() {
             this.formOpen = false
             this.resetForm()
-        }
+        },
+        submitForm() {
+          console.log(this.productData.title)
+        },
     }
 
 }
