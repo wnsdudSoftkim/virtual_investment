@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from db.model.myoper import IndexModel
+from db.model.chart import IndexModel
 from db.operations import Operator as op
 
 router = APIRouter(

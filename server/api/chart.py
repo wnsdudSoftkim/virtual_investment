@@ -1,4 +1,6 @@
 import random
+
+from db.model.chart import ChartInModel
 from db.operations import Operator as op
 from fastapi import APIRouter, WebSocket
 
@@ -29,21 +31,32 @@ async def get_chart_endpoint(websocket: WebSocket):
         },
 
     ]
-
+    symbol = ""
     await websocket.accept()
     while True:
         try:
             print('prepare send')
-            receive_txt = await websocket.receive_text()
-            print(receive_txt)
-            if receive_txt == '1':
-                pass
-            else:
-                pipeline[1]['$match']['Open_time']['$gte'] = receive_txt
+            receive_txt = await receive_text(websocket)
+
+            if receive_txt.date is not '1':
+                symbol = receive_txt.symbol if receive_txt.symbol is not None else symbol
+                pipeline[1]['$match']['Open_time']['$gte'] = receive_txt.date
                 res = await op.aggregate('b_2017', pipeline=pipeline)
-                await websocket.send_json(res)
-                print('resend complete')
+                other_res = await op.get('b_2017', {'Open_time': {'$gte': receive_txt.date}}, {'trades': 1, 'Volume': 1, 'Open': 1, '_id': 0})
+                result = {
+                    'res': res,
+                    'other_res': other_res
+                }
+                await websocket.send_json(result)
+                print('send data')
+
         except Exception as exc_info:
             print('error occur: ', exc_info)
             break
     print('Disconnecting client connection')
+
+
+async def receive_text(websocket: WebSocket) -> ChartInModel:
+    res = await websocket.receive_json()
+    model = ChartInModel(**res)
+    return model

@@ -12,3 +12,9 @@ class IndexModel(BaseMongoDBModel):
 class FileModel(BaseMongoDBModel):
     file_name: Optional[str]
     file_type: Optional[str]
+
+
+class ChartInModel(BaseModel):
+    price: Optional[str]
+    date: str
+    symbol: Optional[str]

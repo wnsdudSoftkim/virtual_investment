@@ -1,11 +1,12 @@
 from db import get_mongo_db
 from config.config import Settings
-from typing import List, Any
+from typing import List, Any, Optional, Dict
+
 
 class Operator(object):
 
     @staticmethod
-    async def get(collection: str, condition: dict, projection: dict):
+    async def get(collection: str, condition: dict, projection: Optional[Dict]):
         db = get_mongo_db()
         if condition is None:
             condition = {}
