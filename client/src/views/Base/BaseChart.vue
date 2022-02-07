@@ -72,11 +72,12 @@ export default {
     },
     methods: {
         connect() {
+           
             methods.chartConnect().then((server)=> {
+                server.send(JSON.stringify(this.$route.query))
                 server.onmessage = ({data}) => {
                     this.server = server
                     const recv = JSON.parse(data)
-
                     const recv_res = recv['res']
 
                     const recv_other = recv['other_res']
@@ -97,6 +98,9 @@ export default {
         },
         sendData(message) { // receive from store value
             methods.sendMessage(message)
+        },
+        sendTempData(message) {
+            methods.sendTempMessage(message)
         },
         storeTrade(item) {
             this.store.dispatch('updateTrade', item)

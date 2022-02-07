@@ -57,7 +57,6 @@ const price = {
         return state.lastDate
       },
       updateprofitrate: state => {
-        console.log(state.profitRate)
         return state.profitRate
       }
     }

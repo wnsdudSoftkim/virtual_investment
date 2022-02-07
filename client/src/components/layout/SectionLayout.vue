@@ -3,7 +3,7 @@
         <div class="section-container">
             <chart-section></chart-section>
             <basic-modal></basic-modal>
-            <green-button/>
+
         </div>
     </div>
 </template>
@@ -11,11 +11,10 @@
 <script>
 import ChartSection from '@/components/layout/ChartSectionLayout.vue'
 import BasicModal from '@/components/common/modal/BasicModal'
-import GreenButton from '@/components/common/button/GreenButton'
 
 export default {
     name:"section-layout",
-    components: {ChartSection, GreenButton, BasicModal},
+    components: {ChartSection, BasicModal},
 
 }
 </script>

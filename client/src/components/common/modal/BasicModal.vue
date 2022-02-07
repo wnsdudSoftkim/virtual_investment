@@ -1,49 +1,49 @@
 <template>
 <div class="modal_container" id="app">
   <div class="add-product" :class="{'open': formOpen}">
-    <div class="button-copy" v-show="!formOpen" @click="formOpen = true">Add Product</div>
-    <form @submit="submitForm">
+    <div class="button-copy" v-show="!formOpen" @click="formOpen = true">버튼을 눌러 프로젝트를 생성해보세요!</div>
+    <form>
 
       <div class="form--field">
-        <label>Product Title *</label>
+        <label>프로젝트 이름</label>
         <input type="text" class="form--element" name="title" v-model="productData.title" placeholder="Title" required="">
       </div>
       <div class="form--container -inline">
         <div class="form--field -short">
-          <label>Product Rating *</label>
+          <label>시작 날짜 *</label>
           <date-picker v-model="pickedDate"></date-picker>
         </div>
         <div class="form--field -short">
-          <label>Product Price *</label>
-          <span class="form--price">$</span>
-          <select v-model="productData.symbol">
-              <option value="0">BTC</option>
-              <option value="1">A</option>
-              <option value="2">B</option>
-              <option value="3">B</option>
+          <label>투자 종목 *</label>
+          
+          <select v-model="productData.symbol" class="form--element">
+              <option value="BTC">BTC</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
           </select>
         </div>
         <div class="form--field -short">
-          <label>List Price *</label>
+          <label>투자 금액 *</label>
           <span class="form--price">$</span>
-          <input type="text" class="form--element" name="list_price" v-model="productData.list_price" placeholder="List Price" required="" min="0" max="500" pattern="\d+(\.\d{2})?">
+          <input type="text" class="form--element" name="list_price" v-model="productData.price" placeholder="Price" required="" min="0" max="500" pattern="\d+(\.\d{2})?">
         </div>
       </div>
-      <div class="form--field">
+      <!-- <div class="form--field">
         <label class="emoji">
           Is Featured
           <input type="checkbox" name="is_featured" v-bind="productData.is_featured">
           <span></span>
         </label>
         <p class="featured-note">If Is Featured is selected the product will appear in a large card.</p>
-      </div>
+      </div> -->
       <div class="form--field">
-        <label>Product Description</label>
-        <textarea class="form--element textarea" v-model="productData.description" placeholder="Description">                                
+        <label></label>
+        <textarea class="form--element textarea" v-model="productData.description" placeholder="자유롭게 설명해보세요">                                
         </textarea>
       </div>
 
-      <button type="submit" class="submit-button">Add Product</button>
+      <button type="submit" class="submit-button" @click.stop.prevent="submitForm" >Add Product</button>
       <div class="cancel"><span @click="cancel()">Cancel</span></div>
     </form>
   </div>
@@ -60,8 +60,12 @@ export default {
       PAYLOAD() {
         return this.productData
       },
-      SYMBOL() {
-        return this.productData.symbol
+      QUERY(){
+        return {
+          'price':this.productData.price,
+          'date': this.pickedDate.toISOString(),
+          'symbol':this.productData.symbol
+        }
       }
     },
     data: ()=> ({
@@ -70,11 +74,12 @@ export default {
             title: '',
             rating: '',
             price: '',
-            symbol: '',
-            is_featured: false,
+            symbol: 'BTC',
+
             pickedDate:''
         },
-        pickedDate: ref(new Date())
+        pickedDate: ref(new Date()),
+        symbolList: ['BTC', "ETR", "AAA", "BBB", "CCC"]
     }),
     methods: {
         resetForm() {
@@ -83,17 +88,15 @@ export default {
                 rating: '',
                 price: '',
                 list_price: '',
-                is_featured: false
+
             }
         },
         cancel() {
             this.formOpen = false
             this.resetForm()
-            console.log(this.pickedDate.toISOString())
-            console.log(this.SYMBOL)
         },
         submitForm() {
-          console.log(this.productData.title)
+           this.$router.push({path: '/chart', query:this.QUERY})
         },
     }
 
@@ -102,17 +105,18 @@ export default {
 
 <style lang="scss">
 .modal_container {
-  background-image: linear-gradient(-128deg, rgba(36, 32, 255, 0.93) 3%, rgba(241, 28, 224, 0.93) 88%, rgba(229, 29, 236, 0.93) 100%);
+  // background-image: linear-gradient(-128deg, rgba(36, 32, 255, 0.93) 3%, rgba(241, 28, 224, 0.93) 88%, rgba(229, 29, 236, 0.93) 100%);
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 20%;
   justify-content: center;
   align-items: center;
 }
 
 .add-product {
   &.open {  
-    background-color: #FAFAFA;
+    background-color: #fafafa75;
+
     padding: 18px 32px;
     border-radius: 5px;
     width: 420px;
@@ -128,8 +132,7 @@ export default {
   transition: all 0.3s ease;
   background-color: $baseColor;
   height: 144px;
-  width: 144px;
-  border-radius: 72px;
+  width: 100%;
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, .07);
   cursor: pointer;
   .button-copy {
@@ -171,7 +174,7 @@ export default {
   border: none;
   font-weight: 700;
   padding: 0 34px;
-  margin: 0 auto;
+  margin: 30px auto;
   img {
     position: relative;
     top: 3px;
