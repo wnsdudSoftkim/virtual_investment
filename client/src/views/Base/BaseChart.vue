@@ -2,10 +2,8 @@
     <fragment-layout >
         <div class="main-section">
             <left-side-bar-container></left-side-bar-container>
-            <!-- right section 부분은 컨테이너로 따로 뺴놓기 -->
+            <!-- title 정보와 수익률 정보를 left, 시작금액, 현재금액, 수익률 정보를 right로 보내기-->
             
-            
-
             <right-section-container></right-section-container>
             <!-- <div class="button-layout">
                 <reset-button>aa</reset-button>
