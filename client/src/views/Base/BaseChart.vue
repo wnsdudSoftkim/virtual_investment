@@ -1,51 +1,34 @@
 <template>
-    <fragment-layout>
-        <reset-button>aa</reset-button>
-        <div>시작금액: {{this.firstAsset}} 현재금액: {{this.nowAsset}} 수익률: {{this.profitRate}}%</div>
-        <fragment-main-block-layout>
-            <div class="columns">
-                <div class="column" v-if="this.headervalue == 1" >
-                    <h3>Base</h3>
-                    <base-container></base-container>
-                </div>
-                <div class="column" v-if="this.headervalue == 2" >
-                    <h3>PRICE</h3>
-                    <progressive-chart-container></progressive-chart-container>
-                </div>
-                <div class="column" v-if="this.headervalue == 3">
-                    <h3>수익률</h3>
-                    <line-chart-container></line-chart-container>
-                </div>
-                <div class="column" v-if="this.headervalue == 4">
-                    <h3>매수한 사람 분포</h3>
-                    <bubble-chart-container></bubble-chart-container>
-                </div>
-                <div class="column" v-if="this.headervalue == 5" >
-                    <h3>Bar Chart</h3>
-                    <bar-chart-container></bar-chart-container>
-                </div>
-            </div>
-        </fragment-main-block-layout>
+    <fragment-layout >
+        <div class="main-section">
+            <left-side-bar-container></left-side-bar-container>
+            <!-- right section 부분은 컨테이너로 따로 뺴놓기 -->
+            
+            
+
+            <right-section-container></right-section-container>
+            <!-- <div class="button-layout">
+                <reset-button>aa</reset-button>
+                <div>시작금액: {{this.firstAsset}} 현재금액: {{this.nowAsset}} 수익률: {{this.profitRate}}%</div>
+            </div> -->
+        </div>
     </fragment-layout>
 </template>
 
 <script>
-import ResetButton from '@/components/common/button/ResetButton'
+// import ResetButton from '@/components/common/button/ResetButton'
 import FragmentLayout from '@/components/layout/FragmentLayout'
-import FragmentMainBlockLayout from '@/components/layout/FragmentMainBlockLayout'
-import LineChartContainer from '@/components/ChartContainer/LineChartContainer'
-import ProgressiveChartContainer from '@/components/ChartContainer/ProgressiveChartContainer'
-import BubbleChartContainer from '@/components/ChartContainer/BubbleChartContainer'
-import BaseContainer from '@/components/ChartContainer/BaseContainer'
-import BarChartContainer from '@/components/ChartContainer/BarChartContainer'
 import { useStore } from 'vuex'
 import {computed} from 'vue'
 import methods from '@/assets/js/common.js'
+import LeftSideBarContainer from '@/components/Container/LeftSideBarContainer.vue'
+import RightSectionContainer from '@/components/Container/RightSectionContainer.vue'
 export default {
     name:'VueChartJS',
-    components: { ResetButton, BaseContainer, LineChartContainer, BarChartContainer, BubbleChartContainer, ProgressiveChartContainer , FragmentLayout, FragmentMainBlockLayout },
+    components: {  FragmentLayout, LeftSideBarContainer,RightSectionContainer },
     data() {
         return {
+  
             datacollection: null,
             store: useStore(),
             chart_data:null,
@@ -131,11 +114,6 @@ export default {
         this.disconnect()
         next() 
     },
-    watch: {
-        check_header(val) {
-            this.headervalue = val
-        }
-    }
 
 }
 </script>
@@ -148,5 +126,7 @@ li {
 a {
     color:$baseColor;
 }
-
+.main-section {
+    display:flex;
+}
 </style>
