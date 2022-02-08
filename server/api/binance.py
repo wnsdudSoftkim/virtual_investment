@@ -29,7 +29,7 @@ async def get_previous_data():
             start_date = f'{year}-01-01'
             end_date = f'{year}-12-31'
             df = await _get_binance_data(start_date, end_date, symbols, COLUMNS)
-            df.to_csv(f'C:/Users/lenovo/CoinData/{symbol[:3].lower()}_{year}.csv', index=False)  # csv파일로 저장하는 부분
+            df.to_csv(f'C:/Users/lenovo/CoinData/{symbol[:3].lower()}_{year}_1h.csv', index=False)  # csv파일로 저장하는 부분
             time.sleep(1)
 
 
@@ -39,7 +39,7 @@ async def _get_binance_data(start_date, end_date, symbol, columns):
     end = int(time.mktime(datetime.strptime(end_date + ' 23:59', '%Y-%m-%d %H:%M').timetuple())) * 1000
     params = {
         'symbol': symbol,
-        'interval': '1m',
+        'interval': '1h',
         'limit': 1000,
         'startTime': start,
         'endTime': end
