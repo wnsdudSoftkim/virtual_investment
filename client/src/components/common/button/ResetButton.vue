@@ -39,7 +39,6 @@ export default {
   align-items: center;
   border: 0;
   border-radius: 8px;
-  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
   box-sizing: border-box;
   color: #000;
   display: flex;
@@ -61,11 +60,11 @@ export default {
 .button-64:active,
 .button-64:hover {
   outline: 0;
-  color:#fff;
+
 }
 
 .button-64 span {
-  background-color: $baseColor;
+  background-color: white;
   padding: 16px 24px;
   border-radius: 6px;
   width: 100%;
@@ -73,9 +72,7 @@ export default {
   transition: 300ms;
 }
 
-.button-64:hover span {
-  background: $secondColor;
-}
+
 
 @media (min-width: 768px) {
   .button-64 {

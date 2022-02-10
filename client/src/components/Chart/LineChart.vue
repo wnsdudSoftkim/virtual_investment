@@ -47,6 +47,7 @@ export default {
             //     display:true
             // },
             responsive: true,
+            aspectRatio: 1,
             maintainAspectRatio: false
         },
     }),

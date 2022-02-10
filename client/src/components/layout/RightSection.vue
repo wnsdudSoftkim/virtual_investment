@@ -1,8 +1,12 @@
 <template>
     <div class="columns">
         <div class="button-layout">
-            <reset-button>aa</reset-button>
-            <div>투자금액: {{this.PROPS.firstAsset}} 현재금액: {{this.PROPS.nowAsset}} 수익률: {{this.PROPS.profitRate}}%</div>
+            <div class="information">
+                <reset-button>aa</reset-button>
+                <span class="info firstasset">투자금액: <b>{{this.PROPS.firstAsset}}</b> </span>
+                <span class="info nowAsset">현재금액: <b>{{this.PROPS.nowAsset}}</b> </span>
+                <span class="info profitRate">수익률: <b>{{this.PROPS.profitRate}}%</b></span>
+            </div>
         </div>
         <!-- TODO headervalue===1 이면 grid로 바꾸기 -->
         <div class="column" v-if="this.headervalue == 2 || this.headervalue=== 1" >
@@ -76,11 +80,22 @@ export default {
 </script>
 
 <style style="scss">
+
 .button-layout {
     position:absolute;
     top:20%;
-    right:5%;
-    width:10rem;
+    right:8%;
     height:20rem;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+}
+.information {
+    display: flex;
+    flex-direction: column;
+}
+.info {
+    padding:1rem;
+    margin:0 auto;
+    color:#000;
+    font-size:18px;
 }
 </style>

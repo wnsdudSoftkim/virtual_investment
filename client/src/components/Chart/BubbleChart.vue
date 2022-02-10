@@ -101,6 +101,7 @@ export default {
                         }
                     }
                 },
+                aspectRatio: 1,
                 responsive: true,
                 maintainAspectRatio: false
             }

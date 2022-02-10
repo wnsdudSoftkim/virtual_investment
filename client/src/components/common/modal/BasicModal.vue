@@ -1,7 +1,7 @@
 <template>
 <div class="modal_container" id="app">
   <div class="add-product" :class="{'open': formOpen}">
-    <div class="button-copy" v-show="!formOpen" @click="formOpen = true">버튼을 눌러 프로젝트를 생성해보세요!</div>
+    <div class="button-copy" v-show="!formOpen" @click="formOpen = true" style="font-size:18px">버튼을 눌러 프로젝트를 생성해보세요!</div>
     <form>
 
       <div class="form--field">

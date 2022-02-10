@@ -1,9 +1,7 @@
 <template>
     <ul class="chart-ul">
         <!--vue for문으로 바꾸기 -->
-        <li class="chart-li">
-            <router-link to="/chart" class="chart-router">vue-chartjs</router-link>
-        </li>
+
     </ul>
 
 </template>
