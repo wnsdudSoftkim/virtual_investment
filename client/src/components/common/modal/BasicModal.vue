@@ -52,6 +52,7 @@
 
 <script>
 import { ref } from 'vue'
+import {useStore} from 'vuex'
 import DatePicker from '@/components/common/datepicker/DatePicker'
 export default {
     name:'BasicModal',
@@ -70,6 +71,7 @@ export default {
     },
     data: ()=> ({
         formOpen:false,
+        store:useStore(),
         productData: {
             title: '',
             rating: '',
@@ -91,12 +93,21 @@ export default {
 
             }
         },
+        storeProject(value) {
+          this.store.dispatch('updateProject', value)
+        },
         cancel() {
             this.formOpen = false
             this.resetForm()
         },
         submitForm() {
-           this.$router.push({path: '/chart', query:this.QUERY})
+          let project = {
+            title:this.productData.title,
+            description: this.productData.description,
+            profit:0
+          }
+          this.storeProject(project)
+          this.$router.push({path: '/chart', query:this.QUERY})
         },
     }
 
