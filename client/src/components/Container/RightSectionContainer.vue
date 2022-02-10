@@ -1,6 +1,6 @@
 <template>
     <div class="rightSectionContainer">
-        <right-section>
+        <right-section v-bind:PROPS="this.PROPS">
         </right-section>
     </div>
 </template>
@@ -10,7 +10,11 @@ import RightSection from '@/components/layout/RightSection.vue'
 
 export default {
     name:'RightSectionContainer',
-    components: {RightSection}
+    components: {RightSection},
+    props: {
+        PROPS:Object
+    },
+
 }
 </script>
 

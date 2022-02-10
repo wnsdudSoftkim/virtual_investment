@@ -37,12 +37,11 @@ export default {
 <style lang="scss">
 .button-64 {
   align-items: center;
-  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
   border: 0;
   border-radius: 8px;
   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: #000;
   display: flex;
   font-family: Phantomsans, sans-serif;
   font-size: 20px;
@@ -62,10 +61,11 @@ export default {
 .button-64:active,
 .button-64:hover {
   outline: 0;
+  color:#fff;
 }
 
 .button-64 span {
-  background-color: rgb(5, 6, 45);
+  background-color: $baseColor;
   padding: 16px 24px;
   border-radius: 6px;
   width: 100%;
@@ -74,7 +74,7 @@ export default {
 }
 
 .button-64:hover span {
-  background: none;
+  background: $secondColor;
 }
 
 @media (min-width: 768px) {

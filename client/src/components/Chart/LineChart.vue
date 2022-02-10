@@ -1,6 +1,6 @@
 <template>
   <div>
-      <canvas id="chart" width="400" height="400"></canvas>
+      <canvas id="chart_line" class="chart"></canvas>
   </div>
 </template>
 
@@ -52,7 +52,7 @@ export default {
     }),
     methods: {
         fillData() {
-            const ctx = document.getElementById('chart').getContext('2d')
+            const ctx = document.getElementById('chart_line').getContext('2d')
             this.myChart = new Chart(ctx, {
                 type: 'line',
                 data: this.chartdata,

@@ -1,20 +1,15 @@
 <template>
     <fragment-layout >
         <div class="main-section">
-            <left-side-bar-container></left-side-bar-container>
-            <!-- title 정보와 수익률 정보를 left, 시작금액, 현재금액, 수익률 정보를 right로 보내기-->
+            <left-side-bar-container ></left-side-bar-container>
+            <!--  시작금액, 현재금액, 수익률 정보를 right로 보내기-->
             
-            <right-section-container></right-section-container>
-            <!-- <div class="button-layout">
-                <reset-button>aa</reset-button>
-                <div>시작금액: {{this.firstAsset}} 현재금액: {{this.nowAsset}} 수익률: {{this.profitRate}}%</div>
-            </div> -->
+            <right-section-container v-bind:PROPS="SEND_PROP" ></right-section-container>
         </div>
     </fragment-layout>
 </template>
 
 <script>
-// import ResetButton from '@/components/common/button/ResetButton'
 import FragmentLayout from '@/components/layout/FragmentLayout'
 import { useStore } from 'vuex'
 import {computed} from 'vue'
@@ -33,9 +28,9 @@ export default {
             server:null,
             headervalue:null,
             count:0,
-            firstAsset:10000,
+            firstAsset:0,
             nowAsset:0,
-            profitRate:0
+            profitRate:0,
         }
     },
     computed: {
@@ -44,10 +39,18 @@ export default {
         },
         check_header() {
             return this.store.getters.updateheader
+        },
+        SEND_PROP() {
+            return {
+                'firstAsset':this.firstAsset,
+                'profitRate':this.profitRate,
+                'nowAsset':this.nowAsset
+            }
         }
     },
     mounted() {
         this.headervalue = 1
+        this.firstAsset = this.$route.query.price
         this.connect()
         console.log('mount:', this.Chart_Data)
     },
@@ -69,6 +72,7 @@ export default {
                     this.storeTrade(recv_other['trades'])
                     this.storeVolume(recv_other['Volume'])
                     this.nowAsset = recv_other['Open']
+                    
                     this.profitRate = (((this.nowAsset-this.firstAsset)/this.firstAsset) * 100).toFixed(2)
                     this.storeprofitRate(this.profitRate)
                 }
@@ -103,7 +107,6 @@ export default {
             this.chart_data = computed(() => this.store.getters.updatechart)
         },
         disconnect() {
-            console.log(this.server)
             methods.chartDisconnect()
         }
         
@@ -126,5 +129,12 @@ a {
 }
 .main-section {
     display:flex;
+}
+// canvas {
+//     width:50rem;
+//     height: 50rem;
+// }
+#chart {
+    width:100%;
 }
 </style>

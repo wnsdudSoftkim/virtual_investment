@@ -1,6 +1,6 @@
 <template>
   <div>
-      <canvas id="chart_progressive" width="800" height="400"></canvas>
+      <canvas id="chart_progressive" class="chart"></canvas>
   </div>
 </template>
 
