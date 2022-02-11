@@ -1,10 +1,16 @@
 <template>
     <div>
         <div v-for="index in project" :key="index">
-            <div class="project-container">
-                <div>{{index.title}}</div>
-                <div>{{index.description}}</div>
-                <div>{{index.profit}}</div>
+            <div class="project-container" @click="redirectProject">
+                <div v-if="index.title !== '' ">
+                    {{index.title}}
+                </div>
+                <div v-if="index.description !== '' ">
+                    {{index.description}}
+                </div>
+                <div v-if="index.profit !== 0 ">
+                    {{index.profit}}
+                </div>
             </div>
 
         </div>
@@ -20,7 +26,8 @@ export default {
     name:"chartLayout",
     data:()=> ({
         store:useStore(),
-        project:{}
+        project:{},
+        query: {}
 
     }),
     mounted() {
@@ -29,8 +36,12 @@ export default {
     },
     methods: {
         connect() {
-           this.project= computed(() => this.store.getters.updateproject)
+            this.project = computed(() => this.store.getters.updateproject)
+            this.query = computed(() => this.store.getters.updatequery)
 
+        },
+        redirectProject() {
+            this.$router.push({path: '/chart', query:this.query})
         },
     }
 }
@@ -39,7 +50,19 @@ export default {
 <style lang="scss">
 .project-container {
     display:flex;
-    padding: 1rem;
+    flex-direction:column;
+    margin:1rem;
+    cursor:pointer;
+    background:white;
+    border-radius:4px;
+    box-shadow:rgba(0, 0, 0, 0.18) 0px 4px 16px 0px;
+    transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+    overflow:hidden;
+    
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: rgba(0, 0, 0, 0.28) 0px 12px 20px 0px;
+    }
 }
 
 </style>

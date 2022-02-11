@@ -96,6 +96,9 @@ export default {
         storeProject(value) {
           this.store.dispatch('updateProject', value)
         },
+        storeQuery(value) {
+          this.store.dispatch('updateQuery', value)
+        },
         cancel() {
             this.formOpen = false
             this.resetForm()
@@ -107,6 +110,7 @@ export default {
             profit:0
           }
           this.storeProject(project)
+          this.storeQuery(this.QUERY)
           this.$router.push({path: '/chart', query:this.QUERY})
         },
     }
