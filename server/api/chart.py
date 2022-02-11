@@ -24,13 +24,12 @@ async def get_chart_endpoint(websocket: WebSocket):
         try:
             print('prepare send')
             receive_txt = await receive_text(websocket)
-            if receive_txt.date is not '1':
+            if receive_txt.date != '1':
                 year = receive_txt.date[:4]
                 symbol = receive_txt.symbol if receive_txt.symbol is not None else symbol
                 pipeline[1]['$match']['Open_time']['$gte'] = receive_txt.date
-                condition = cm.change_date(year)
+                condition = cm.change_date(receive_txt.date)
                 result = await cm.get_chart_data(year, symbol, pipeline, condition, project)
-
                 await websocket.send_json(result)
                 print('send data')
 
@@ -42,6 +41,5 @@ async def get_chart_endpoint(websocket: WebSocket):
 
 async def receive_text(websocket: WebSocket) -> ChartInModel:
     res = await websocket.receive_json()
-    print(res)
     model = ChartInModel(**res)
     return model

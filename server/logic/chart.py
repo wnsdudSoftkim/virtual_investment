@@ -21,11 +21,11 @@ class ChartManager(object):
 
     @classmethod
     async def _get_trades_data(cls, year: str, symbol: str, condition: Dict[str, Any], project: Dict[str, int]):
-        await op.get(f'{symbol[0]}_{year}', condition, project)
+        return await op.get(f'{symbol[0].lower()}_{year}', condition, project)
 
     @classmethod
-    def change_date(cls, year: str):
-        return {'Open_time': {'$gte': year}}
+    def change_date(cls, date: str):
+        return {'Open_time': {'$gte': date}}
 
     @classmethod
     def get_pipeline(cls):
