@@ -67,7 +67,7 @@ export default {
     },
     methods: {
         receiveProps() {
-            console.log(this.PROPS)
+            // console.log(this.PROPS)
         }
     },
     watch: {

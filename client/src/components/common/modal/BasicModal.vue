@@ -126,6 +126,8 @@ export default {
   height: 20%;
   justify-content: center;
   align-items: center;
+  box-shadow:rgba(0, 0, 0, 0.18) 0px 4px 16px 0px;
+  z-index: 10;
 }
 
 .add-product {

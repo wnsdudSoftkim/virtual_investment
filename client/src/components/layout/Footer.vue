@@ -12,10 +12,10 @@
                 </div>
                 <div class="profit_overview" v-if="this.cbvalue !== 0">
                     <div class="profit_good bold" v-if="this.cbvalue < 0">
-                        <b>{{this.cbvalue}}</b> 수익이 너무 적어요 다시 한번 시도해보세요
+                        <b>{{this.cbvalue}}%</b> 최근 수익이 아쉽네요 다시 한번 시도해보세요
                     </div>
                     <div class="profit_good bold" v-if="this.cbvalue > 0">
-                        <b>{{this.cbvalue}}</b> 수익이 높네요! 잘 하고 있습니다!
+                        <b>{{this.cbvalue}}%</b> 최근 수익이 높네요! 잘 하고 있습니다!
                     </div>
                 </div>
             </span>
