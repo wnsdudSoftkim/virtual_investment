@@ -26,3 +26,4 @@ pnpm-debug.log*
 _pycache_
 
 venv
+client/package-lock.json
