@@ -150,7 +150,7 @@ export default {
   background-color: $baseColor;
   height: 144px;
   width: 100%;
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, .07);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, .27);
   cursor: pointer;
   .button-copy {
     text-align: center;

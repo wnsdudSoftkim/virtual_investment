@@ -2,10 +2,14 @@
     <div class="columns">
         <div class="button-layout">
             <div class="information">
-                <reset-button>aa</reset-button>
+                <reset-button></reset-button>
                 <span class="info firstasset">투자금액: <b>{{this.PROPS.firstAsset}}</b> </span>
                 <span class="info nowAsset">현재금액: <b>{{this.PROPS.nowAsset}}</b> </span>
                 <span class="info profitRate">수익률: <b>{{this.PROPS.profitRate}}%</b></span>
+                <div class="footer-button">
+                    <sell-button></sell-button>
+                    <purchase-button></purchase-button>
+                </div>
             </div>
         </div>
         <!-- TODO headervalue===1 이면 grid로 바꾸기 -->
@@ -31,13 +35,15 @@
 <script>
 import { useStore } from 'vuex'
 import ResetButton from '@/components/common/button/ResetButton'
+import SellButton from '@/components/common/button/SellButton'
 import LineChartContainer from '@/components/ChartContainer/LineChartContainer'
 import ProgressiveChartContainer from '@/components/ChartContainer/ProgressiveChartContainer'
 import BubbleChartContainer from '@/components/ChartContainer/BubbleChartContainer'
 import BarChartContainer from '@/components/ChartContainer/BarChartContainer'
+import PurchaseButton from '@/components/common/button/PurchaseButton'
 export default {
     name:'RightSection',
-    components: {ResetButton, LineChartContainer, ProgressiveChartContainer, BubbleChartContainer, BarChartContainer},
+    components: {ResetButton, LineChartContainer, ProgressiveChartContainer, BubbleChartContainer, BarChartContainer, PurchaseButton, SellButton},
     data() {
         return {
   
@@ -86,7 +92,9 @@ export default {
     top:20%;
     right:8%;
     height:20rem;
-    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    /* box-shadow: rgba(106, 36, 187, 1) */
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, .27);
+
 }
 .information {
     display: flex;
@@ -97,5 +105,8 @@ export default {
     margin:0 auto;
     color:#000;
     font-size:18px;
+}
+.footer-button {
+    display: flex;
 }
 </style>
