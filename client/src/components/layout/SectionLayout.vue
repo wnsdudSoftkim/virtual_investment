@@ -11,7 +11,6 @@
 <script>
 import ChartSection from '@/components/layout/ChartSectionLayout.vue'
 import BasicModal from '@/components/common/modal/BasicModal'
-
 export default {
     name:"section-layout",
     components: {ChartSection, BasicModal},

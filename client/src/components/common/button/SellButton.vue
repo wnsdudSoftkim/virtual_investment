@@ -1,21 +1,27 @@
 <template>
-    <button class="button-48" role="button" @click="changeButtonValue"><span class="text">{{this.button_value}}</span></button>
-  
+  <button class="button-48" role="button" @click="changeButtonValue"><span class="text">{{this.button_value}}</span></button>
 </template>
 
 <script>
-// import methods from '@/assets/js/common.js'
+
 import {useStore} from 'vuex'
+import Swal from 'sweetalert2'
+import {computed} from 'vue'
+
 export default {
     
     name:'SellButton',
     data: ()=> ({
         button_value: "Sell",
-        store: useStore()
+        store: useStore(),
+        count: null
 
     }),
     methods: {
         changeButtonValue() {
+          this.descQuantity(this.count)
+          this.getTransactions(this.count)
+          // SellAlert()
             // let message = this.store.getters.updatelastdate
 
             // if (this.button_flag === true) {
@@ -23,9 +29,17 @@ export default {
             // }else {
             //   methods.sendMessage(message)
             // }
+
+           this.count= computed(() => this.store.getters.getquantity)
            
-           
-        }
+        },
+        getTransactions(count) {
+          //...
+          Swal.fire(`1 ~~를 매도합니다. 현재 보유량: ${count}`)
+        },
+        descQuantity(item) {
+            this.store.dispatch('descQuantity', item)
+        },
     } 
 }
 </script>

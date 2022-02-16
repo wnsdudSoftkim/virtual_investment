@@ -19,7 +19,7 @@ const quantity = {
 
     },
     getters: {
-      updatequantity: state =>{
+      getquantity: state =>{
         return state.quantity
       }
     }

@@ -5,6 +5,7 @@
 
 <script>
 import methods from '@/assets/js/common.js'
+import Swal from 'sweetalert2'
 import {useStore} from 'vuex'
 export default {
     
@@ -22,6 +23,7 @@ export default {
             this.button_flag = !this.button_flag
             console.log(message)
             console.log(this.button_flag)
+            this.getTransactions(this.button_flag)
             if (this.button_flag === true) {
               methods.sendMessage(1)
             }else {
@@ -29,6 +31,11 @@ export default {
             }
            
            
+        },
+        getTransactions(flag) {
+          //...
+          let text = flag ? '투자를 종료합니다.' : '투자를 다시 시작합니다.'
+          Swal.fire(`${text}`)
         }
     } 
 }

@@ -6,6 +6,7 @@
 <script>
 // import methods from '@/assets/js/common.js'
 import {useStore} from 'vuex'
+import Swal from 'sweetalert2'
 export default {
     
     name:'PurchaseButton',
@@ -16,6 +17,7 @@ export default {
     }),
     methods: {
         changeButtonValue() {
+          this.getTransactions()
             // let message = this.store.getters.updatelastdate
 
             // if (this.button_flag === true) {
@@ -25,6 +27,10 @@ export default {
             // }
            
            
+        },
+        getTransactions(count) {
+          //...
+          Swal.fire(`1~~를 구매하셨습니다. 현재 구매량 : ${count}`)
         }
     } 
 }
