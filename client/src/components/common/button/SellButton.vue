@@ -67,11 +67,7 @@ export default {
   cursor: pointer;
 }
 
-.button-48:active {
-    margin-left: -1px;
-    margin-top:-1px;
-    box-shadow: none;
-}
+
 .button-48:hover {
   outline: 0;
 

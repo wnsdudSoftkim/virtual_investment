@@ -7,17 +7,23 @@
 // import methods from '@/assets/js/common.js'
 import {useStore} from 'vuex'
 import Swal from 'sweetalert2'
+import {computed} from 'vue'
+
 export default {
     
     name:'PurchaseButton',
     data: ()=> ({
         button_flag: false,
         button_value: "BUY",
-        store: useStore()
+        store: useStore(),
+        count: null
+
     }),
     methods: {
         changeButtonValue() {
-          this.getTransactions()
+          this.ascQuantity(this.count)
+          this.getTransactions(this.count)
+          // SellAlert()
             // let message = this.store.getters.updatelastdate
 
             // if (this.button_flag === true) {
@@ -25,13 +31,18 @@ export default {
             // }else {
             //   methods.sendMessage(message)
             // }
+
+           this.count= computed(() => this.store.getters.getquantity)
            
            
         },
         getTransactions(count) {
           //...
           Swal.fire(`1~~를 구매하셨습니다. 현재 구매량 : ${count}`)
-        }
+        }, 
+        ascQuantity(item) {
+            this.store.dispatch('ascQuantity', item)
+        },
     } 
 }
 </script>
@@ -57,12 +68,6 @@ export default {
   touch-action: manipulation;
   white-space: nowrap;
   cursor: pointer;
-}
-
-.button-32:active {
-    margin-left:-1px;
-    margin-top:-1px;
-    box-shadow: none;
 }
 .button-32:hover {
   outline: 0;
