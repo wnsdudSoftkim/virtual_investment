@@ -7,7 +7,6 @@ class ChartManager(object):
     @classmethod
     async def get_chart_data(cls, year: str, symbol: str, pipeline: List[Dict[str, Any]],
                              condition: Dict[str, Any], project: Dict[str, int]):
-
         res = await cls._get_price_data(year, symbol, pipeline)
         other_res = await cls._get_trades_data(year, symbol, condition, project)
         return {
@@ -48,3 +47,12 @@ class ChartManager(object):
 
         ]
         return pipeline
+
+
+class ChartHourHanlder:
+    """TODO
+        send 1h, 30m select data
+    """
+    # @classmethod
+    # async def _get_trades_hour_data(cls, year: str, symbol: str, condition: Dict[str, Any], project: Dict[str, int]):
+    #     return await op.get(f'{symbol[0].lower()}_{year}', condition, project)

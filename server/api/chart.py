@@ -1,7 +1,4 @@
-import random
-
 from db.model.chart import ChartInModel
-from db.operations import Operator as op
 from fastapi import APIRouter, WebSocket
 
 from logic.chart import ChartManager as cm

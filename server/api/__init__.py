@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from api.bithumb import router as bithumb_router
-from api.binance import router as binance_router
-from api.myoper import router as operator_router
+from api._dump.binance import router as binance_router
+from api.test_oper import router as operator_router
 from api.chart import router as chart_router
 router = APIRouter()
 
