@@ -6,6 +6,7 @@
                 <span class="info firstasset">투자금액: <b>{{this.PROPS.firstAsset}}</b> </span>
                 <span class="info nowAsset">현재금액: <b>{{this.PROPS.nowAsset}}</b> </span>
                 <span class="info profitRate">수익률: <b>{{this.PROPS.profitRate}}%</b></span>
+                <span class="info quentity">보유량: <b>{{Quantity}}</b></span>
                 <div class="footer-button">
                     <sell-button></sell-button>
                     <purchase-button></purchase-button>
@@ -55,7 +56,8 @@ export default {
             count:0,
             firstAsset:10000,
             nowAsset:0,
-            profitRate:0
+            profitRate:0,
+            quantity: 0
         }
     },
     props: {
@@ -65,16 +67,21 @@ export default {
         check_header() {
             return this.store.getters.updateheader
         },
+        Quantity() {
+            return this.store.getters.getquantity
+        }
 
     },
     mounted() {
         this.headervalue = 1
+        
         
     },
     methods: {
         receiveProps() {
             // console.log(this.PROPS)
         }
+        
     },
     watch: {
         check_header(val) {

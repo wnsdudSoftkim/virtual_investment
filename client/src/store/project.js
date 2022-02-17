@@ -3,6 +3,7 @@ const project = {
         title:'',
         description:'',
         profit:'',
+        quantity:0,
     }],
     count:0
 }),
@@ -13,7 +14,15 @@ const project = {
         state.count += 1
       },
       UPDATE_PROFIT(state, value) {
-          state.project.profit = value
+          state.project[state.count] = value
+      },
+      ASC_QUANTITY(state) {
+        console.log(state.count)
+        console.log(state.project[state.count])
+        state.project[state.count].quantity += 1;
+      },
+      DESC_QUANTITY(state) {
+          state.project[state.count].quantity -= 1;
       }
     },
     actions: {
@@ -22,11 +31,20 @@ const project = {
       },
       updateProfit({commit},value) {
         commit('UPDATE_PROFIT', value)
+      },
+      descQuantity({commit}) {
+        commit('DESC_QUANTITY')
+      },
+      ascQuantity({commit}) {
+        commit('ASC_QUANTITY')
       }
     },
     getters: {
       updateproject: state =>{
         return state.project
+      },
+      getquantity: state =>{
+        return state.project[state.count].quantity
       }
     }
 }

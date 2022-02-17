@@ -14,13 +14,21 @@ export default {
     data: ()=> ({
         button_value: "Sell",
         store: useStore(),
-        count: null
-
+        count: 0,
+        symbol:''
     }),
+    mounted() {
+      this.count= computed(() => this.store.getters.getquantity)
+      this.symbol = computed(() => this.state.getters.getsymbol)
+    },
     methods: {
         changeButtonValue() {
-          this.descQuantity(this.count)
-          this.getTransactions(this.count)
+          if (this.count === 0) {
+            this.alertTransactions()
+          } else {
+            this.descQuantity(this.count)
+            this.getTransactions(this.count)
+          }
           // SellAlert()
             // let message = this.store.getters.updatelastdate
 
@@ -29,14 +37,15 @@ export default {
             // }else {
             //   methods.sendMessage(message)
             // }
-
-           this.count= computed(() => this.store.getters.getquantity)
            
         },
         getTransactions(count) {
           //...
-          Swal.fire(`1 ~~를 매도합니다. 현재 보유량: ${count}`)
+          Swal.fire(`1 ${this.symbol}를 매도합니다. 현재 보유량: ${count}`)
         },
+        alertTransactions() {
+          Swal.fire(`매도할 수량이 없습니다.`)
+        }, 
         descQuantity(item) {
             this.store.dispatch('descQuantity', item)
         },

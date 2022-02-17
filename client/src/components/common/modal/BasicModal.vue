@@ -67,6 +67,9 @@ export default {
           'date': this.pickedDate.toISOString(),
           'symbol':this.productData.symbol
         }
+      },
+      QUANTITY() {
+        return this.store.getters.getquantity
       }
     },
     data: ()=> ({
@@ -90,7 +93,7 @@ export default {
                 rating: '',
                 price: '',
                 list_price: '',
-
+        
             }
         },
         storeProject(value) {
@@ -107,7 +110,8 @@ export default {
           let project = {
             title:this.productData.title,
             description: this.productData.description,
-            profit:0
+            profit:0,
+            quantity: this.QUANTITY
           }
           this.storeProject(project)
           this.storeQuery(this.QUERY)

@@ -16,9 +16,12 @@ export default {
         button_flag: false,
         button_value: "BUY",
         store: useStore(),
-        count: null
+        count: 0
 
     }),
+    mounted() {
+      this.count= computed(() => this.store.getters.getquantity)
+    },
     methods: {
         changeButtonValue() {
           this.ascQuantity(this.count)
@@ -32,7 +35,7 @@ export default {
             //   methods.sendMessage(message)
             // }
 
-           this.count= computed(() => this.store.getters.getquantity)
+           
            
            
         },

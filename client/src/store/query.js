@@ -13,6 +13,9 @@ const query = {
     getters: {
       updatequery: state =>{
         return state.query
+      },
+      getsymbol: state => {
+        return state.query.symbol
       }
     }
 }
