@@ -17,9 +17,11 @@ export default {
         count: 0,
         symbol:''
     }),
+    props: {
+        PROPS:String
+    },
     mounted() {
       this.count= computed(() => this.store.getters.getquantity)
-      this.symbol = computed(() => this.state.getters.getsymbol)
     },
     methods: {
         changeButtonValue() {
@@ -29,19 +31,11 @@ export default {
             this.descQuantity(this.count)
             this.getTransactions(this.count)
           }
-          // SellAlert()
-            // let message = this.store.getters.updatelastdate
-
-            // if (this.button_flag === true) {
-            //   methods.sendMessage(1)
-            // }else {
-            //   methods.sendMessage(message)
-            // }
            
         },
         getTransactions(count) {
           //...
-          Swal.fire(`1 ${this.symbol}를 매도합니다. 현재 보유량: ${count}`)
+          Swal.fire(`1 ${this.PROPS}를 매도합니다. 현재 보유량: ${count}`)
         },
         alertTransactions() {
           Swal.fire(`매도할 수량이 없습니다.`)
@@ -49,7 +43,13 @@ export default {
         descQuantity(item) {
             this.store.dispatch('descQuantity', item)
         },
-    } 
+        receiveProps() {
+          this.symbol = this.PROPS.symbol
+        }
+    },
+    watch: {
+      'PROPS':'receiveProps'
+    }
 }
 </script>
 

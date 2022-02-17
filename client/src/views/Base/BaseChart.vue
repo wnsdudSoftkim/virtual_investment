@@ -31,6 +31,7 @@ export default {
             firstAsset:0,
             nowAsset:0,
             profitRate:0,
+            symbol:''
         }
     },
     computed: {
@@ -44,13 +45,15 @@ export default {
             return {
                 'firstAsset':this.firstAsset,
                 'profitRate':this.profitRate,
-                'nowAsset':this.nowAsset
+                'nowAsset':this.nowAsset,
+                'symbol': this.symbol
             }
         }
     },
     mounted() {
         this.headervalue = 1
         this.firstAsset = this.$route.query.price
+        this.symbol = this.$route.query.symbol
         this.connect()
         console.log('mount:', this.Chart_Data)
     },

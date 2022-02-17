@@ -19,34 +19,31 @@ export default {
         count: 0
 
     }),
+    props: {
+        PROPS:String
+    },
     mounted() {
       this.count= computed(() => this.store.getters.getquantity)
     },
     methods: {
         changeButtonValue() {
           this.ascQuantity(this.count)
-          this.getTransactions(this.count)
-          // SellAlert()
-            // let message = this.store.getters.updatelastdate
-
-            // if (this.button_flag === true) {
-            //   methods.sendMessage(1)
-            // }else {
-            //   methods.sendMessage(message)
-            // }
-
-           
-           
-           
+          this.getTransactions(this.count)     
         },
         getTransactions(count) {
           //...
-          Swal.fire(`1~~를 구매하셨습니다. 현재 구매량 : ${count}`)
+          Swal.fire(`1 ${this.PROPS}를 구매하셨습니다. 현재 구매량 : ${count}`)
         }, 
         ascQuantity(item) {
             this.store.dispatch('ascQuantity', item)
         },
-    } 
+        receiveProps() {
+          this.symbol = this.PROPS
+        }
+    }, 
+    watch: {
+      'PROPS': 'receiveProps'
+    }
 }
 </script>
 

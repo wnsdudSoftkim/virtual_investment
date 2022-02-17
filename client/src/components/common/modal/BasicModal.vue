@@ -279,7 +279,7 @@ label {
 
 .form--element {
   background-color: #fff;
-  border: 1px solid #ECECEC;
+  border: 1px solid #76d275;
   border-radius: 3px;
   font-size: 14px;
   line-height: 28px;

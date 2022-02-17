@@ -6,10 +6,10 @@
                 <span class="info firstasset">투자금액: <b>{{this.PROPS.firstAsset}}</b> </span>
                 <span class="info nowAsset">현재금액: <b>{{this.PROPS.nowAsset}}</b> </span>
                 <span class="info profitRate">수익률: <b>{{this.PROPS.profitRate}}%</b></span>
-                <span class="info quentity">보유량: <b>{{Quantity}}</b></span>
+                <span class="info quentity">보유량: <b>{{this.quantity}}</b></span>
                 <div class="footer-button">
-                    <sell-button></sell-button>
-                    <purchase-button></purchase-button>
+                    <sell-button v-bind:PROPS="this.PROPS.symbol" ></sell-button>
+                    <purchase-button v-bind:PROPS="this.PROPS.symbol" ></purchase-button>
                 </div>
             </div>
         </div>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import {computed} from 'vue'
 import { useStore } from 'vuex'
 import ResetButton from '@/components/common/button/ResetButton'
 import SellButton from '@/components/common/button/SellButton'
@@ -74,7 +75,7 @@ export default {
     },
     mounted() {
         this.headervalue = 1
-        
+        this.quantity = computed(() => this.store.getters.getquantity)
         
     },
     methods: {
