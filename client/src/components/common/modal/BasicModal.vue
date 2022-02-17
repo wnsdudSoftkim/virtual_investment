@@ -80,8 +80,8 @@ export default {
             rating: '',
             price: '',
             symbol: 'BTC',
-
-            pickedDate:''
+            pickedDate:'',
+            quantity:0
         },
         pickedDate: ref(new Date()),
         symbolList: ['BTC', "ETR", "AAA", "BBB", "CCC"]
@@ -111,7 +111,7 @@ export default {
             title:this.productData.title,
             description: this.productData.description,
             profit:0,
-            quantity: this.QUANTITY
+            quantity: this.productData.quantity
           }
           this.storeProject(project)
           this.storeQuery(this.QUERY)

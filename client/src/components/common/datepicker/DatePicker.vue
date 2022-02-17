@@ -1,14 +1,26 @@
-<script setup>
-import Datepicker from 'vue3-datepicker'
+<script >
+  import { ref } from 'vue';
+  import Datepicker from 'vue3-date-time-picker';
+  import 'vue3-date-time-picker/dist/main.css'
+  export default {
+    components: { Datepicker },
+    setup() {
+      const date = ref();
+        return {
+          date
+      }
+    },
+    data() {
+      return {
+        year: [2017,2021]
 
-
+      }
+    }
+  };
 </script>
 
 <template>
-  <datepicker
-    class="pick_input"
-  >
-  </datepicker>
+  <Datepicker v-model="date" class="pick_input" :yearRange="[2017, 2021]" :closeOnAutoApply="true" :state="true" ></Datepicker>
 </template>
 <style lang="scss">
 .pick_input{

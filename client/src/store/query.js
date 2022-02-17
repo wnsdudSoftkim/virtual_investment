@@ -11,11 +11,8 @@ const query = {
       }
     },
     getters: {
-      updatequery: state =>{
+      updatequery: state => {
         return state.query
-      },
-      getsymbol: state => {
-        return state.query.symbol
       }
     }
 }
