@@ -11,7 +11,7 @@
       <div class="form--container -inline">
         <div class="form--field -short">
           <label>시작 날짜 *</label>
-          <date-picker v-model="pickedDate"></date-picker>
+          <date-picker v-model="productData.pickedDate"></date-picker>
         </div>
         <div class="form--field -short">
           <label>투자 종목 *</label>
@@ -26,17 +26,9 @@
         <div class="form--field -short">
           <label>투자 금액 *</label>
           <span class="form--price">$</span>
-          <input type="text" class="form--element" name="list_price" v-model="productData.price" placeholder="Price" required="" min="0" max="500" pattern="\d+(\.\d{2})?">
+          <input type="number" class="form--element" name="list_price" v-model="productData.price" placeholder="Price" required="" min="0" max="500" pattern="\d+(\.\d{2})?">
         </div>
       </div>
-      <!-- <div class="form--field">
-        <label class="emoji">
-          Is Featured
-          <input type="checkbox" name="is_featured" v-bind="productData.is_featured">
-          <span></span>
-        </label>
-        <p class="featured-note">If Is Featured is selected the product will appear in a large card.</p>
-      </div> -->
       <div class="form--field">
         <label></label>
         <textarea class="form--element textarea" v-model="productData.description" placeholder="자유롭게 설명해보세요">                                
@@ -51,8 +43,9 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+// import { ref } from 'vue'
 import {useStore} from 'vuex'
+import Swal from 'sweetalert2'
 import DatePicker from '@/components/common/datepicker/DatePicker'
 export default {
     name:'BasicModal',
@@ -64,7 +57,7 @@ export default {
       QUERY(){
         return {
           'price':this.productData.price,
-          'date': this.pickedDate.toISOString(),
+          'date': this.productData.pickedDate.toISOString(),
           'symbol':this.productData.symbol
         }
       },
@@ -83,7 +76,7 @@ export default {
             pickedDate:'',
             quantity:0
         },
-        pickedDate: ref(new Date()),
+        // pickedDate: ref(new Date()),
         symbolList: ['BTC', "ETR", "AAA", "BBB", "CCC"]
     }),
     methods: {
@@ -115,7 +108,17 @@ export default {
           }
           this.storeProject(project)
           this.storeQuery(this.QUERY)
-          this.$router.push({path: '/chart', query:this.QUERY})
+          if (this.productData.price === '' || this.productData.pickedDate === '') {
+            let text = ''
+            text += this.productData.price === '' ? '가격 ' : ''
+            text += this.productData.pickedDate === '' ? '날짜 ' : ''
+            Swal.fire(`${text} 입력해 주십시오`)
+          }else if (typeof(this.productData.price) !== 'number') {
+            Swal.fire(`가격을 다시 입력해 주십시오`)
+          }
+          else {
+            this.$router.push({path: '/chart', query:this.QUERY})
+          }
         },
     }
 

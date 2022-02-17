@@ -8,7 +8,8 @@
       const startDate = ref(new Date(2020, 1));
       const date = ref();
         return {
-          date
+          date,
+          startDate
       }
     },
     data() {
@@ -21,7 +22,7 @@
 </script>
 
 <template>
-  <Datepicker v-model="date" class="pick_input" :yearRange="[2017, 2021]" :startDate="startDate" :closeOnAutoApply="true" :state="true" ></Datepicker>
+  <Datepicker v-model="date" class="pick_input" :yearRange="[2017, 2021]" :startDate="startDate"  :state="true" placeholder="Select Date" ></Datepicker>
 </template>
 <style lang="scss">
 .pick_input{
