@@ -22,7 +22,9 @@ class BinanceHandler:
 
     @staticmethod
     def select_symbol_top():
-        return ['BTCUSDT', 'ETHUSDT', 'XRPUSDT', 'ADAUSDT']
+        # return ['BTCUSDT', 'ETHUSDT', 'XRPUSDT', 'ADAUSDT']
+        # return ['ADAUSDT']
+        return ['BTCUSDT', 'ETHUSDT']
 
     @staticmethod
     def select_symbol_usdt() -> List[str]:

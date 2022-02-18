@@ -49,7 +49,7 @@ class ChartManager(object):
         return pipeline
 
 
-class ChartHourHanlder:
+class ChartHourHandler:
     """TODO
         send 1h, 30m select data
     """
