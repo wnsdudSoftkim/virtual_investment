@@ -1,5 +1,5 @@
 @echo off
-set price_list=b_ c_ d_ s_ t_ u_
+set price_list=btc_ eth_
 set year_list=2017 2018 2019 2020 2021
 set value=_1h
 
