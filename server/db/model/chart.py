@@ -1,17 +1,32 @@
+from datetime import datetime
+from typing import Optional, List, Any
+
 from pydantic import BaseModel
-from db import BaseMongoDBModel
-from typing import Optional, Dict
 
 
+class PriceTradeVolumeModel(BaseModel):
+    trades: int
+    Volume: float
+    Open: int
 
-class IndexModel(BaseMongoDBModel):
-    name: Optional[str]
-    methodology_file: Optional[Dict]
-    factsheet_file: Optional[Dict]
+    def __init__(self, **data: Any):
+        if 'Open' in data:
+            data['Open'] = round(data.get('Open') * 1195.73)
+        super().__init__(**data)
 
-class FileModel(BaseMongoDBModel):
-    file_name: Optional[str]
-    file_type: Optional[str]
+
+class PriceModel(BaseModel):
+    x: Optional[str]
+    y: Optional[str]
+
+
+class PriceListModel(PriceModel):
+    result: List[PriceModel]
+
+
+class PriceOutModel(PriceListModel, PriceTradeVolumeModel):
+    res: PriceListModel
+    other_res: PriceTradeVolumeModel
 
 
 class ChartInModel(BaseModel):

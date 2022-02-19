@@ -1,4 +1,8 @@
-from typing import List, Dict, Any
+import json
+from datetime import datetime
+from typing import List, Dict, Any, Union
+
+from db.model.chart import PriceTradeVolumeModel
 from db.operations import Operator as op
 
 
@@ -9,22 +13,31 @@ class ChartManager(object):
                              condition: Dict[str, Any], project: Dict[str, int]):
         res = await cls._get_price_data(year, symbol, pipeline)
         other_res = await cls._get_trades_data(year, symbol, condition, project)
-        return {
-            'res': res,
-            'other_res': other_res
-        }
+        result = {'res': res, 'other_res': other_res.dict()}
+
+        return result
 
     @classmethod
     async def _get_price_data(cls, year: str, symbol: str, pipeline: List[Dict[str, Any]]):
-        return await op.aggregate(f'{symbol[0].lower()}_{year}', pipeline=pipeline)
+        res = await op.aggregate(f'{symbol.lower()}_{year}_30m', pipeline=pipeline)
+        for doc in res:
+            doc['x'] = datetime.strptime(doc.get('x'), "%Y-%m-%dT%H:%M:%S").strftime('%Y-%m-%d/%H:%M')
+            doc['y'] = round(doc.get('y') * 1195.73)
+        return res
 
     @classmethod
-    async def _get_trades_data(cls, year: str, symbol: str, condition: Dict[str, Any], project: Dict[str, int]):
-        return await op.get(f'{symbol[0].lower()}_{year}', condition, project)
+    async def _get_trades_data(cls, year: str, symbol: str, condition: Dict[str, Any], project: Dict[str, int]) \
+            -> PriceTradeVolumeModel:
+        res = await op.get(f'{symbol.lower()}_{year}_1h', condition, project)
+        return PriceTradeVolumeModel(**res)
 
     @classmethod
     def change_date(cls, date: str):
         return {'Open_time': {'$gte': date}}
+
+    @classmethod
+    def calculate_date(cls, date: str):
+        return f'{date[:4]}-{date[5:10]}T{date[11:16]}'
 
     @classmethod
     def get_pipeline(cls):
@@ -47,12 +60,3 @@ class ChartManager(object):
 
         ]
         return pipeline
-
-
-class ChartHourHandler:
-    """TODO
-        send 1h, 30m select data
-    """
-    # @classmethod
-    # async def _get_trades_hour_data(cls, year: str, symbol: str, condition: Dict[str, Any], project: Dict[str, int]):
-    #     return await op.get(f'{symbol[0].lower()}_{year}', condition, project)

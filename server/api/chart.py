@@ -1,6 +1,8 @@
-from db.model.chart import ChartInModel
+import json
+
 from fastapi import APIRouter, WebSocket
 
+from db.model.chart import ChartInModel
 from logic.chart import ChartManager as cm
 
 router = APIRouter(
@@ -23,9 +25,10 @@ async def get_chart_endpoint(websocket: WebSocket):
             receive_txt = await receive_text(websocket)
             if receive_txt.date != '1':
                 year = receive_txt.date[:4]
+                date = cm.calculate_date(receive_txt.date)
                 symbol = receive_txt.symbol if receive_txt.symbol is not None else symbol
-                pipeline[1]['$match']['Open_time']['$gte'] = receive_txt.date
-                condition = cm.change_date(receive_txt.date)
+                pipeline[1]['$match']['Open_time']['$gte'] = date
+                condition = cm.change_date(date)
                 result = await cm.get_chart_data(year, symbol, pipeline, condition, project)
                 await websocket.send_json(result)
                 print('send data')
