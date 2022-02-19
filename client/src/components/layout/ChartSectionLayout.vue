@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="index in project" :key="index">
-            <div class="project-container" @click="redirectProject" v-if="index.title !=='' "  >
+            <div class="project-container" @click="redirectProject" v-if="index.title !=='SAMPLE' "  >
                 <div class="flex-left">
                     <div class="project-title index" v-if="index.title !== '' ">
                         <span class="bold">프로젝트</span>

@@ -17,10 +17,8 @@
           <label>투자 종목 *</label>
           
           <select v-model="productData.symbol" class="form--element">
-              <option value="BTC">BTC</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
+              <option value="BTC">비트코인</option>
+              <option value="ETH">이더리움</option>
           </select>
         </div>
         <div class="form--field -short">
@@ -77,7 +75,7 @@ export default {
             quantity:0
         },
         // pickedDate: ref(new Date()),
-        symbolList: ['BTC', "ETR", "AAA", "BBB", "CCC"]
+        symbolList: ['BTCUSDT', "ETRUSDT"]
     }),
     methods: {
         resetForm() {
@@ -106,8 +104,7 @@ export default {
             profit:0,
             quantity: this.productData.quantity
           }
-          this.storeProject(project)
-          this.storeQuery(this.QUERY)
+
           if (this.productData.price === '' || this.productData.pickedDate === '') {
             let text = ''
             text += this.productData.price === '' ? '가격 ' : ''
@@ -117,6 +114,8 @@ export default {
             Swal.fire(`가격을 다시 입력해 주십시오`)
           }
           else {
+            this.storeProject(project)
+            this.storeQuery(this.QUERY)
             this.$router.push({path: '/chart', query:this.QUERY})
           }
         },

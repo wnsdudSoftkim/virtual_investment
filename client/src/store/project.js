@@ -1,7 +1,7 @@
 const project = {
     state: () => ({ project: [{
-        title:'',
-        description:'',
+        title:'SAMPLE',
+        description:'SAMPLE',
         profit:'',
         quantity:0,
     }],

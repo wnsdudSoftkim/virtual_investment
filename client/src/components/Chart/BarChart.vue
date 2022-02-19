@@ -60,7 +60,6 @@ export default {
         },
         addData() {
             let date = this.store.getters.updatelastdate
-            console.log(date)
             this.myChart.data.datasets[0].data = this.myChart.data.datasets[0].data.concat([this.cbvalue])
             this.myChart.data.labels= this.myChart.data.labels.concat([date.substring(11,)])
             

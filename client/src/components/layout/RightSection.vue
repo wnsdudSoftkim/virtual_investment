@@ -13,22 +13,20 @@
                 </div>
             </div>
         </div>
-        <!-- TODO headervalue===1 이면 grid로 바꾸기 -->
-        <div class="column" v-if="this.headervalue == 2 || this.headervalue=== 1" >
-            <h3>PRICE</h3>
+        <div class="column" v-if="this.headervalue == 2 || this.headervalue === 1" >
+            <h3>Price</h3>
             <progressive-chart-container></progressive-chart-container>
+            <description-container></description-container>
         </div>
         <div class="column" v-if="this.headervalue == 3 || this.headervalue === 1">
-            <h3>수익률</h3>
+            <h3>Trades</h3>
             <line-chart-container></line-chart-container>
+            <description-container></description-container>
         </div>
-        <div class="column" v-if="this.headervalue == 4 || this.headervalue === 1">
-            <h3>매수한 사람 분포</h3>
-            <bubble-chart-container></bubble-chart-container>
-        </div>
-        <div class="column" v-if="this.headervalue == 5 || this.headervalue === 1" >
-            <h3>Bar Chart</h3>
+        <div class="column" v-if="this.headervalue == 4 || this.headervalue === 1" >
+            <h3>Volume</h3>
             <bar-chart-container></bar-chart-container>
+            <description-container></description-container>
         </div>
     </div>
 </template>
@@ -40,12 +38,12 @@ import ResetButton from '@/components/common/button/ResetButton'
 import SellButton from '@/components/common/button/SellButton'
 import LineChartContainer from '@/components/ChartContainer/LineChartContainer'
 import ProgressiveChartContainer from '@/components/ChartContainer/ProgressiveChartContainer'
-import BubbleChartContainer from '@/components/ChartContainer/BubbleChartContainer'
 import BarChartContainer from '@/components/ChartContainer/BarChartContainer'
 import PurchaseButton from '@/components/common/button/PurchaseButton'
+import DescriptionContainer from '@/components/Container/DescriptionContainer.vue'
 export default {
     name:'RightSection',
-    components: {ResetButton, LineChartContainer, ProgressiveChartContainer, BubbleChartContainer, BarChartContainer, PurchaseButton, SellButton},
+    components: {ResetButton, LineChartContainer, ProgressiveChartContainer, BarChartContainer, PurchaseButton, SellButton, DescriptionContainer},
     data() {
         return {
   
