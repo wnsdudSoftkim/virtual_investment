@@ -3,7 +3,7 @@
         <div v-for="index in project" :key="index">
             <div class="project-container" @click="redirectProject" v-if="index.title !=='SAMPLE' "  >
                 <div class="flex-left">
-                    <div class="project-title index" v-if="index.title !== '' ">
+                    <div class="project-title index" v-if="index.title !== 'SAMPLE' ">
                         <span class="bold">프로젝트</span>
                         <p>{{index.title}}</p>
                     </div>
@@ -11,7 +11,7 @@
                         <span class="bold">수익률</span>
                         <p>{{index.profit}}%</p>
                     </div>
-                    <div class="project-description index" v-if="index.description !== '' ">
+                    <div class="project-description index" v-if="index.description !== 'SAMPLE' ">
                         <span class="bold">간단 설명</span>
                         <p>{{index.description}}</p>
                     </div>
@@ -41,7 +41,6 @@ export default {
     components: { LottiePlayer },
     mounted() {
         this.connect()
-        console.log(this.project[0])
     },
     methods: {
         connect() {

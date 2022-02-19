@@ -31,7 +31,8 @@ export default {
             firstAsset:0,
             nowAsset:0,
             profitRate:0,
-            symbol:''
+            symbol:'',
+            replaceAsset:''
         }
     },
     computed: {
@@ -45,14 +46,18 @@ export default {
             return {
                 'firstAsset':this.firstAsset,
                 'profitRate':this.profitRate,
-                'nowAsset':this.nowAsset,
+                'nowAsset':this.replaceAsset,
                 'symbol': this.symbol
             }
+        },
+        Invest_Asset() {
+            return this.store.getters.getInvestAsset
         }
     },
     mounted() {
         this.headervalue = 1
         this.firstAsset = this.$route.query.price
+        this.storeInvestAsset(parseInt(this.firstAsset))
         this.symbol = this.$route.query.symbol
         this.connect()
         console.log('mount:', this.Chart_Data)
@@ -74,9 +79,12 @@ export default {
                     this.sendData(recv_res[(this.count)-1]['x'])
                     this.storeTrade(recv_other['trades'])
                     this.storeVolume(recv_other['Volume'])
+
                     this.nowAsset = recv_other['Open']
+                    this.storePriceAsset(this.nowAsset)
+                    this.profitRate = (((this.nowAsset-this.Invest_Asset)/this.Invest_Asset) * 100).toFixed(2)
+                    this.replaceAsset = this.nowAsset.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
                     
-                    this.profitRate = (((this.nowAsset-this.firstAsset)/this.firstAsset) * 100).toFixed(2)
                     this.storeprofitRate(this.profitRate)
                 }
             }).catch(err=> {
@@ -89,6 +97,12 @@ export default {
         },
         sendTempData(message) {
             methods.sendTempMessage(message)
+        },
+        storePriceAsset(item) {
+            this.store.dispatch('UpdatePriceAsset', item)
+        },
+        storeInvestAsset(item) {
+            this.store.dispatch('IncreaseAsset', item)
         },
         storeTrade(item) {
             this.store.dispatch('updateTrade', item)

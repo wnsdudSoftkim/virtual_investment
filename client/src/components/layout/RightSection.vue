@@ -3,9 +3,9 @@
         <div class="button-layout">
             <div class="information">
                 <reset-button></reset-button>
-                <span class="info firstasset">투자금액: <b>{{this.PROPS.firstAsset}}</b> </span>
-                <span class="info nowAsset">현재금액: <b>{{this.PROPS.nowAsset}}</b> </span>
-                <span class="info profitRate">수익률: <b>{{this.PROPS.profitRate}}%</b></span>
+                <span class="info firstasset">투자금액: <b>{{this.Invest_Asset}}</b> </span>
+                <span class="info nowAsset">현재금액: <b>{{this.PROPS.nowAsset}} 원</b> </span>
+                <span class="info profitRate">수익률: <b>{{this.PROPS.profitRate}} %</b></span>
                 <span class="info quentity">보유량: <b>{{this.quantity}}</b></span>
                 <div class="footer-button">
                     <sell-button v-bind:PROPS="this.PROPS.symbol" ></sell-button>
@@ -68,6 +68,10 @@ export default {
         },
         Quantity() {
             return this.store.getters.getquantity
+        },
+        Invest_Asset() {
+            return this.store.getters.getInvestAsset.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+
         }
 
     },

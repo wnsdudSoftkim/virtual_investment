@@ -17,8 +17,6 @@ const project = {
           state.project[state.count] = value
       },
       ASC_QUANTITY(state) {
-        console.log(state.count)
-        console.log(state.project[state.count])
         state.project[state.count].quantity += 1;
       },
       DESC_QUANTITY(state) {

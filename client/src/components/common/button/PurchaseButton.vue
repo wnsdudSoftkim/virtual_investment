@@ -16,17 +16,20 @@ export default {
         button_flag: false,
         button_value: "BUY",
         store: useStore(),
-        count: 0
+        count: 0,
+        price: 0
 
     }),
     props: {
         PROPS:String
     },
     mounted() {
-      this.count= computed(() => this.store.getters.getquantity)
+      this.count = computed(() => this.store.getters.getquantity)
+      this.price = computed(() => this.store.getters.getPriceAsset)
     },
     methods: {
         changeButtonValue() {
+          this.increaseInvestAsset(this.price)
           this.ascQuantity(this.count)
           this.getTransactions(this.count)     
         },
@@ -39,6 +42,9 @@ export default {
         },
         receiveProps() {
           this.symbol = this.PROPS
+        },
+        increaseInvestAsset(item) {
+          this.store.dispatch('IncreaseAsset', item)
         }
     }, 
     watch: {

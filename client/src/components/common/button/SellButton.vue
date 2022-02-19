@@ -15,19 +15,22 @@ export default {
         button_value: "Sell",
         store: useStore(),
         count: 0,
-        symbol:''
+        symbol:'',
+        price:0,
     }),
     props: {
         PROPS:String
     },
     mounted() {
       this.count= computed(() => this.store.getters.getquantity)
+      this.price = computed(() => this.store.getters.getPriceAsset)
     },
     methods: {
         changeButtonValue() {
           if (this.count === 0) {
             this.alertTransactions()
           } else {
+            this.decreaseInvestAsset(this.price)
             this.descQuantity(this.count)
             this.getTransactions(this.count)
           }
@@ -45,6 +48,9 @@ export default {
         },
         receiveProps() {
           this.symbol = this.PROPS.symbol
+        },
+        decreaseInvestAsset(item) {
+          this.store.dispatch('DecreaseAsset', item)
         }
     },
     watch: {
