@@ -21,7 +21,6 @@ async def get_chart_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
         try:
-            print('prepare send')
             receive_txt = await receive_text(websocket)
             if receive_txt.date != '1':
                 year = receive_txt.date[:4]
@@ -31,7 +30,6 @@ async def get_chart_endpoint(websocket: WebSocket):
                 condition = cm.change_date(date)
                 result = await cm.get_chart_data(year, symbol, pipeline, condition, project)
                 await websocket.send_json(result)
-                print('send data')
 
         except Exception as exc_info:
             print('error occur: ', exc_info)
