@@ -4,13 +4,10 @@ var timeout
 const methods = { // eslint-disable-line no-unused-vars
     chartConnect: () => {
         return new Promise((resolve, reject) => {
-            socket = new WebSocket('ws://sheltered-chamber-00843.herokuapp.com:80/ws')
-            // socket = new WebSocket('ws://localhost:8000/ws')
+            // socket = new WebSocket('ws://sheltered-chamber-00843.herokuapp.com:80/ws')
+            socket = new WebSocket('ws://localhost:8000/ws')
             socket.onopen = () => {
-                console.log('?', socket)
                 logs.push({event: 'connect complete: ', data: 'ws://https://sheltered-chamber-00843.herokuapp.com/ws'})
-
-                // socket.send("2017-08-17T13:00:00") // 초기값은 BaseChart에서 입력받고 send해주면 통신 시작되는 것으로 바꾸기
                 resolve(socket)
             }
             socket.onerror = (err) => {

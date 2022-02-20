@@ -1,8 +1,10 @@
 <template>
     <fragment-layout >
-        <div class="main-section">
+        <!-- <div v-if="LOADING === 0" class="lottie_loading">
+            <lottie-loading></lottie-loading>
+        </div> -->
+        <div class="main-section" >
             <left-side-bar-container ></left-side-bar-container>
-            <!--  시작금액, 현재금액, 수익률 정보를 right로 보내기-->
             
             <right-section-container v-bind:PROPS="SEND_PROP" ></right-section-container>
         </div>
@@ -10,6 +12,7 @@
 </template>
 
 <script>
+// import LottieLoading from '@/components/common/lottie/LottieLoading'
 import FragmentLayout from '@/components/layout/FragmentLayout'
 import { useStore } from 'vuex'
 import {computed} from 'vue'
@@ -18,7 +21,7 @@ import LeftSideBarContainer from '@/components/Container/LeftSideBarContainer.vu
 import RightSectionContainer from '@/components/Container/RightSectionContainer.vue'
 export default {
     name:'VueChartJS',
-    components: {  FragmentLayout, LeftSideBarContainer,RightSectionContainer },
+    components: {  FragmentLayout, LeftSideBarContainer, RightSectionContainer},
     data() {
         return {
   
@@ -32,7 +35,10 @@ export default {
             nowAsset:0,
             profitRate:0,
             symbol:'',
-            replaceAsset:''
+            replaceAsset:'',
+            loading:0,
+            hasCoin:0,
+            rate:0
         }
     },
     computed: {
@@ -44,29 +50,34 @@ export default {
         },
         SEND_PROP() {
             return {
-                'firstAsset':this.firstAsset,
                 'profitRate':this.profitRate,
                 'nowAsset':this.replaceAsset,
                 'symbol': this.symbol
             }
         },
-        Profit_Asset() {
-            return this.store.getters.getProfitAsset
+        LOADING() {
+            return this.loading
+        },
+        HAS_COIN() {
+            return this.store.getters.getquantity
+        },
+        Invest_Asset() {
+            return this.store.getters.getInvestAsset
         }
     },
     mounted() {
+        console.log(this.loading)
+        setTimeout(()=> {
+            this.loading = 1
+        },1900)
         this.headervalue = 1
-        this.firstAsset = this.$route.query.price
-        this.storeInvestAsset(parseInt(this.firstAsset))
         this.symbol = this.$route.query.symbol
         this.connect()
-        console.log('mount:', this.Chart_Data)
     },
     methods: {
         connect() {
            
             methods.chartConnect().then((server)=> {
-                console.log('?????', server)
                 server.send(JSON.stringify(this.$route.query))
                 server.onmessage = ({data}) => {
                     this.server = server
@@ -83,11 +94,12 @@ export default {
 
                     this.nowAsset = recv_other['Open']
                     this.storePriceAsset(this.nowAsset)
-
-                    // this.calculateProfit(this.nowAsset)
-                    this.profitRate = (((this.nowAsset-this.Profit_Asset)/this.Profit_Asset) * 100).toFixed(2)
-                    console.log(this.profitRate)
-                
+                    if (this.HAS_COIN === 0) {
+                        this.profitRate = 0
+                    }else {
+                        this.profitRate = ((((this.HAS_COIN * this.nowAsset) / (this.Invest_Asset)) * 100)-100).toFixed(2)
+                        this.store.dispatch('UpdateRate',Math.round((this.HAS_COIN * this.nowAsset)-(this.Invest_Asset)))
+                    }
                     this.replaceAsset = this.nowAsset.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
                     
                     this.storeprofitRate(this.profitRate)
@@ -97,10 +109,9 @@ export default {
             })
         
         },
-        // calculateProfit(asset) {
-        //     this.profitRate = (1 + this.profitRate) * (((asset-this.Invest_Asset)/this.Invest_Asset) * 100).toFixed(2) -1
-        //     console.log(this.profitRate)
-        // },
+        calculateProfit(asset) {
+            return ((1 + this.profitRate) * (((asset-this.Profit_Asset)/this.Profit_Asset) * 100).toFixed(2)) - 1
+        },
         sendData(message) { // receive from store value
             methods.sendMessage(message)
         },
@@ -112,7 +123,6 @@ export default {
         },
         storeInvestAsset(item) {
             this.store.dispatch('IncreaseAsset', item)
-            this.store.dispatch('UpdateProfitAsset', item)
         },
         storeTrade(item) {
             this.store.dispatch('updateTrade', item)
@@ -156,6 +166,12 @@ a {
 }
 .main-section {
     display:flex;
+}
+.lottie_loading {
+    position: absolute;
+    top:30%;
+    left:30%;
+    z-index: 9999;
 }
 // canvas {
 //     width:50rem;

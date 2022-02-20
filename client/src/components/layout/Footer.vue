@@ -2,8 +2,14 @@
     <div class="main-footer">
         <div class="left-footer">
             <span class="left-footer-span bold">
-                <a href="https://github.com/wnsdudSoftkim/virtual_investment" target="_blank" style="color:black;">코드 살펴보기</a>
+                <a href="https://objective-blackwell-219591.netlify.app/" target="_blank" style="color:black;">Blog</a>
             </span>
+            <span class="left-footer-span bold">
+                <a href="https://github.com/wnsdudSoftkim/virtual_investment" target="_blank" style="color:black;">Github</a>
+            </span>
+            <!-- <span class="left-footer-span bold">
+                <a href="https://github.com/wnsdudSoftkim/virtual_investment" target="_blank" style="color:black;">c</a>
+            </span> -->
         </div>
         <div class="right-footer">
             <span class="right-footer-span">
@@ -62,8 +68,16 @@ export default {
         padding: 1rem;
     }
     .left-footer{
+        display:flex;
+        margin-right: .5rem;
         .left-footer-span{
             color:$baseColor;
+            a {
+                padding:2rem;
+                &:hover{
+                    color: hsla(0,0%,100%,.9);
+                }
+            }
         }
     }
     .right-footer{

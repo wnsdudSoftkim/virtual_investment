@@ -1,18 +1,21 @@
 const asset = {
-    state: () => ({ investasset: 0, priceasset: 0, profitasset: 0 }),
+    state: () => ({ investasset: 0, priceasset: 0, rate:0}),
     mutations: {
       INCREASE_ASSET(state, value) {
-        state.investasset += value;
+        state.investasset += value       
       },
-      DECREASE_ASSET(state, value) {
-        state.investasset -= value
+      DECREASE_ASSET(state, value) { // eslint-disable-line no-unused-vars
+        
+        // state.investasset -= value 
+        state.investasset = state.investasset - value
+                
+      },
+      UPDATE_RATE(state, value) {
+        state.rate = value
       },
       UPDATE_PRICE_ASSET(state, value) {
           state.priceasset = value
       },
-      UPDATE_PROFIT_ASSET(state, value) {
-        state.profitasset = value
-      }
     },
     actions: {
       IncreaseAsset({commit}, value) {
@@ -24,8 +27,8 @@ const asset = {
       UpdatePriceAsset({commit}, value) {
         commit('UPDATE_PRICE_ASSET', value)
       },
-      UpdateProfitAsset({commit}, value) {
-        commit('UPDATE_PROFIT_ASSET', value)
+      UpdateRate({commit},value) {
+        commit('UPDATE_RATE', value )
       }
     },
     getters: {
@@ -35,8 +38,8 @@ const asset = {
       getPriceAsset: state => {
           return state.priceasset
       },
-      getProfitAsset: state => {
-        return state.profitasset
+      getRate: state => {
+        return state.rate
       }
     }
 }

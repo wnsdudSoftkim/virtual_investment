@@ -21,11 +21,11 @@
               <option value="ETH">이더리움</option>
           </select>
         </div>
-        <div class="form--field -short">
+        <!-- <div class="form--field -short">
           <label>투자 금액 *</label>
           <span class="form--price">$</span>
           <input type="number" class="form--element" name="list_price" v-model="productData.price" placeholder="Price" required="" min="0" max="500" pattern="\d+(\.\d{2})?">
-        </div>
+        </div> -->
       </div>
       <div class="form--field">
         <label></label>
@@ -54,7 +54,6 @@ export default {
       },
       QUERY(){
         return {
-          'price':this.productData.price,
           'date': this.productData.pickedDate.toISOString(),
           'symbol':this.productData.symbol
         }
@@ -105,13 +104,10 @@ export default {
             quantity: this.productData.quantity
           }
 
-          if (this.productData.price === '' || this.productData.pickedDate === '') {
+          if (this.productData.pickedDate === '') {
             let text = ''
-            text += this.productData.price === '' ? '가격 ' : ''
             text += this.productData.pickedDate === '' ? '날짜 ' : ''
             Swal.fire(`${text} 입력해 주십시오`)
-          }else if (typeof(this.productData.price) !== 'number') {
-            Swal.fire(`가격을 다시 입력해 주십시오`)
           }
           else {
             this.storeProject(project)
@@ -253,9 +249,7 @@ label {
 .form--field {
   width: 420px;
   margin: 10px 0;
-  &.-short {
-    width: 120px;
-  }
+
 }
 
 .form--price {
@@ -282,6 +276,7 @@ label {
 .form--element {
   background-color: #fff;
   border: 1px solid #76d275;
+  box-shadow: 0 0 4px #76d275;
   border-radius: 3px;
   font-size: 14px;
   line-height: 28px;
@@ -296,7 +291,7 @@ label {
     border-radius: 2px;
   }
   &:not(.texteare) {
-    height: 30px;
+    height: 38px;
   }
   &.textarea {
     height: 80px;

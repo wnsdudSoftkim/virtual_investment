@@ -45,8 +45,7 @@ export default {
         },
         increaseInvestAsset(item) {
           this.store.dispatch('IncreaseAsset', item)
-          this.store.dispatch('UpdateProfitAsset', item)
-        }
+        },
     }, 
     watch: {
       'PROPS': 'receiveProps'
@@ -88,7 +87,7 @@ export default {
   padding: 16px 24px;
   border-radius: 6px;
   width: 100%;
-  height: 100%;
+  height: 80%;
   transition: 300ms;
   display: flex;
   align-items: center;
