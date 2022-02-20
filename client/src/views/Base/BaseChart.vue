@@ -66,6 +66,7 @@ export default {
         connect() {
            
             methods.chartConnect().then((server)=> {
+                console.log('?????', server)
                 server.send(JSON.stringify(this.$route.query))
                 server.onmessage = ({data}) => {
                     this.server = server
