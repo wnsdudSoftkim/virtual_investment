@@ -19,6 +19,7 @@ class ChartManager(object):
 
     @classmethod
     async def _get_price_data(cls, year: str, symbol: str, pipeline: List[Dict[str, Any]]):
+
         res = await op.aggregate(f'{symbol.lower()}_{year}_30m', pipeline=pipeline)
         for doc in res:
             doc['x'] = datetime.strptime(doc.get('x'), "%Y-%m-%dT%H:%M:%S").strftime('%Y-%m-%d/%H:%M')

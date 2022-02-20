@@ -1,3 +1,5 @@
+import certifi
+import pymongo
 from motor.motor_asyncio import AsyncIOMotorClient
 from config.config import mongodb_service_local_uri, Settings
 from pydantic import BaseModel, Field
@@ -17,7 +19,7 @@ database = Database()
 def connect_db():
     # print('connecting mongodb service')
     logger.info('connecting mongodb service')
-    database.client = AsyncIOMotorClient(Settings.MONGO_SERVICE_URI)
+    database.client = AsyncIOMotorClient(Settings.MONGO_SERVICE_URI, tlsCAFile=certifi.where())
     database.db = database.client[Settings.MONGO_DB]
     logger.info('complete connect')
 

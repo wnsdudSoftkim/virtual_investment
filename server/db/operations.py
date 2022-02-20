@@ -41,6 +41,9 @@ class Operator(object):
     @staticmethod
     async def aggregate(collection: str,
                         pipeline: List[Any] = None):
+        def __aiter__(self):
+            return self.__wrapped__.__aiter__()
+
         db = get_mongo_db()
 
         if pipeline is None:

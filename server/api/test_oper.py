@@ -17,4 +17,4 @@ async def sample_oper():
             '$limit': 1000
         }
     ]
-    res = await op.aggregate('b_2017', pipeline=pipeline)
+    res = op.aggregate('b_2017', pipeline=pipeline)
