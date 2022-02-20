@@ -5,6 +5,7 @@
 
 <script>
 import methods from '@/assets/js/common.js'
+import Swal from 'sweetalert2'
 import {useStore} from 'vuex'
 export default {
     
@@ -22,16 +23,19 @@ export default {
             this.button_flag = !this.button_flag
             console.log(message)
             console.log(this.button_flag)
-            if (this.button_flag === false) {
-             methods.sendMessage(0)
+            this.getTransactions(this.button_flag)
+            if (this.button_flag === true) {
+              methods.sendMessage(1)
+            }else {
+              methods.sendMessage(message)
             }
-            else {
-              if (message !== null) {
-                methods.sendMessage(message)
-              }else {
-                methods.sendMessage(1)
-              }
-            }
+           
+           
+        },
+        getTransactions(flag) {
+          //...
+          let text = flag ? '투자를 종료합니다.' : '투자를 다시 시작합니다.'
+          Swal.fire(`${text}`)
         }
     } 
 }
@@ -40,12 +44,10 @@ export default {
 <style lang="scss">
 .button-64 {
   align-items: center;
-  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
   border: 0;
   border-radius: 8px;
-  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: #000;
   display: flex;
   font-family: Phantomsans, sans-serif;
   font-size: 20px;
@@ -65,10 +67,11 @@ export default {
 .button-64:active,
 .button-64:hover {
   outline: 0;
+
 }
 
 .button-64 span {
-  background-color: rgb(5, 6, 45);
+  background-color: white;
   padding: 16px 24px;
   border-radius: 6px;
   width: 100%;
@@ -76,9 +79,7 @@ export default {
   transition: 300ms;
 }
 
-.button-64:hover span {
-  background: none;
-}
+
 
 @media (min-width: 768px) {
   .button-64 {

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <canvas id="chart_progressive" width="800" height="400"></canvas>
+      <canvas id="chart_progressive" width=800 class="chart"></canvas>
   </div>
 </template>
 
@@ -61,7 +61,6 @@ export default {
             // this.myChart.data.datasets[0].data = this.cbvalue
             // this.myChart.update()
             this.myChart.data.datasets[0].data = this.myChart.data.datasets[0].data.concat(this.cbvalue)
-            console.log(this.myChart.data.datasets[0].data)
             this.myChart.update()
         },
         // prepareData() {

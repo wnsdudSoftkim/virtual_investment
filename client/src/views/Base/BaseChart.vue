@@ -1,56 +1,38 @@
 <template>
-    <fragment-layout>
-        <reset-button>aa</reset-button>
-        <fragment-main-block-layout>
-            <div class="columns">
-                <div class="column" v-if="this.headervalue == 1" >
-                    <h3>Base</h3>
-                    <base-container></base-container>
-                </div>
-                <div class="column" v-if="this.headervalue == 2" >
-                    <h3>PRICE</h3>
-                    <progressive-chart-container></progressive-chart-container>
-                </div>
-                <div class="column" v-if="this.headervalue == 3">
-                    <h3>수익률</h3>
-                    <line-chart-container></line-chart-container>
-                </div>
-                <div class="column" v-if="this.headervalue == 4">
-                    <h3>매수한 사람 분포</h3>
-                    <bubble-chart-container></bubble-chart-container>
-                </div>
-                <div class="column" v-if="this.headervalue == 5" >
-                    <h3>Bar Chart</h3>
-                    <bar-chart-container></bar-chart-container>
-                </div>
-            </div>
-        </fragment-main-block-layout>
+    <fragment-layout >
+        <div class="main-section">
+            <left-side-bar-container ></left-side-bar-container>
+            <!--  시작금액, 현재금액, 수익률 정보를 right로 보내기-->
+            
+            <right-section-container v-bind:PROPS="SEND_PROP" ></right-section-container>
+        </div>
     </fragment-layout>
 </template>
 
 <script>
-import ResetButton from '@/components/common/button/ResetButton'
 import FragmentLayout from '@/components/layout/FragmentLayout'
-import FragmentMainBlockLayout from '@/components/layout/FragmentMainBlockLayout'
-import LineChartContainer from '@/components/ChartContainer/LineChartContainer'
-import ProgressiveChartContainer from '@/components/ChartContainer/ProgressiveChartContainer'
-import BubbleChartContainer from '@/components/ChartContainer/BubbleChartContainer'
-import BaseContainer from '@/components/ChartContainer/BaseContainer'
-import BarChartContainer from '@/components/ChartContainer/BarChartContainer'
 import { useStore } from 'vuex'
 import {computed} from 'vue'
 import methods from '@/assets/js/common.js'
+import LeftSideBarContainer from '@/components/Container/LeftSideBarContainer.vue'
+import RightSectionContainer from '@/components/Container/RightSectionContainer.vue'
 export default {
     name:'VueChartJS',
-    components: { ResetButton, BaseContainer, LineChartContainer, BarChartContainer, BubbleChartContainer, ProgressiveChartContainer , FragmentLayout, FragmentMainBlockLayout },
+    components: {  FragmentLayout, LeftSideBarContainer,RightSectionContainer },
     data() {
         return {
+  
             datacollection: null,
             store: useStore(),
             chart_data:null,
             server:null,
             headervalue:null,
-            count:0
+            count:0,
+            firstAsset:0,
+            nowAsset:0,
+            profitRate:0,
+            symbol:'',
+            replaceAsset:''
         }
     },
     computed: {
@@ -59,37 +41,84 @@ export default {
         },
         check_header() {
             return this.store.getters.updateheader
+        },
+        SEND_PROP() {
+            return {
+                'firstAsset':this.firstAsset,
+                'profitRate':this.profitRate,
+                'nowAsset':this.replaceAsset,
+                'symbol': this.symbol
+            }
+        },
+        Profit_Asset() {
+            return this.store.getters.getProfitAsset
         }
     },
     mounted() {
         this.headervalue = 1
+        this.firstAsset = this.$route.query.price
+        this.storeInvestAsset(parseInt(this.firstAsset))
+        this.symbol = this.$route.query.symbol
         this.connect()
         console.log('mount:', this.Chart_Data)
     },
     methods: {
         connect() {
+           
             methods.chartConnect().then((server)=> {
+                console.log('?????', server)
+                server.send(JSON.stringify(this.$route.query))
                 server.onmessage = ({data}) => {
                     this.server = server
                     const recv = JSON.parse(data)
-                    // const value = Math.floor((recv.value * 100))
-                    // console.log(value)
-                    // this.storeData(value)
-                    console.log(recv)
-                    this.count += recv.length
-                    this.storePrice(recv)
-                    console.log(recv[this.count-1]['x'])
-                    this.storeDate(recv[this.count-1]['x'])
-        
+                    const recv_res = recv['res']
+
+                    const recv_other = recv['other_res']
+                    this.count = recv_res.length
+                    this.storePrice(recv_res)
+                    this.storeDate(recv_res[this.count-1]['x'])
+                    this.sendData(recv_res[(this.count)-1]['x'])
+                    this.storeTrade(recv_other['trades'])
+                    this.storeVolume(recv_other['Volume'])
+
+                    this.nowAsset = recv_other['Open']
+                    this.storePriceAsset(this.nowAsset)
+
+                    // this.calculateProfit(this.nowAsset)
+                    this.profitRate = (((this.nowAsset-this.Profit_Asset)/this.Profit_Asset) * 100).toFixed(2)
+                    console.log(this.profitRate)
+                
+                    this.replaceAsset = this.nowAsset.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
                     
+                    this.storeprofitRate(this.profitRate)
                 }
             }).catch(err=> {
                 console.log(err)
             })
         
         },
+        // calculateProfit(asset) {
+        //     this.profitRate = (1 + this.profitRate) * (((asset-this.Invest_Asset)/this.Invest_Asset) * 100).toFixed(2) -1
+        //     console.log(this.profitRate)
+        // },
         sendData(message) { // receive from store value
             methods.sendMessage(message)
+        },
+        sendTempData(message) {
+            methods.sendTempMessage(message)
+        },
+        storePriceAsset(item) {
+            this.store.dispatch('UpdatePriceAsset', item)
+        },
+        storeInvestAsset(item) {
+            this.store.dispatch('IncreaseAsset', item)
+            this.store.dispatch('UpdateProfitAsset', item)
+        },
+        storeTrade(item) {
+            this.store.dispatch('updateTrade', item)
+        },
+        storeVolume(item) {
+            this.store.dispatch('updateVolume', item)
         },
         storePrice(item) {
             // this.store.dispatch('updateValue', item)
@@ -98,11 +127,13 @@ export default {
         storeDate(item) {
             this.store.dispatch('updateLastDate', item)
         },
+        storeprofitRate(item) {
+            this.store.dispatch('updateProfitRate', item)
+        },
         getData() {
             this.chart_data = computed(() => this.store.getters.updatechart)
         },
         disconnect() {
-            console.log(this.server)
             methods.chartDisconnect()
         }
         
@@ -111,11 +142,6 @@ export default {
         this.disconnect()
         next() 
     },
-    watch: {
-        check_header(val) {
-            this.headervalue = val
-        }
-    }
 
 }
 </script>
@@ -128,5 +154,14 @@ li {
 a {
     color:$baseColor;
 }
-
+.main-section {
+    display:flex;
+}
+// canvas {
+//     width:50rem;
+//     height: 50rem;
+// }
+#chart {
+    width:100%;
+}
 </style>

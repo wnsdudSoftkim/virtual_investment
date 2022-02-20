@@ -14,6 +14,7 @@ export default {
 <style>
   body {
     width:100%;
+    margin: 0;
     overflow-y: scroll;
     overflow-x: unset;
     font-size: 14px;

@@ -1,11 +1,12 @@
 <template>
   <div>
-      <canvas id="chart" width="400" height="400"></canvas>
+      <canvas id="chart_line" class="chart"></canvas>
   </div>
 </template>
 
 <script>
 import { Chart, registerables } from 'chart.js'
+import { useStore } from 'vuex'
 Chart.register(...registerables)
 export default {
     name:'LineChart',
@@ -14,16 +15,15 @@ export default {
     },
 
     data: () => ({
+        store: useStore(),
         chartdata: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
-            'August', 'September', 'October', 'November', 'December'], 
             datasets:[{
-                label: 'Data One',
+                label: 'Trade',
                 backgroundColor: '#f87979',
-                pointBackgroundColor: 'white',
+                pointBackgroundColor: 'red',
                 borderWidth: 1,
                 pointBorderColor: 'red',
-                data: [90, 10, 20, 30, 50, 10, 30, 40, 60, 100, 20 , 40]
+                data: []
             }]
         },
         options: {
@@ -43,16 +43,17 @@ export default {
                 }],
 
             },
-            legend: {
-                display:true
-            },
+            // legend: {
+            //     display:true
+            // },
             responsive: true,
+            aspectRatio: 1,
             maintainAspectRatio: false
         },
     }),
     methods: {
         fillData() {
-            const ctx = document.getElementById('chart').getContext('2d')
+            const ctx = document.getElementById('chart_line').getContext('2d')
             this.myChart = new Chart(ctx, {
                 type: 'line',
                 data: this.chartdata,
@@ -61,10 +62,9 @@ export default {
             })
         },
         addData() {
-            // this.myChart.data.datasets[0].data = this.cbvalue
-            // this.myChart.update()
+            let date = this.store.getters.updatelastdate
             this.myChart.data.datasets[0].data = this.myChart.data.datasets[0].data.concat([this.cbvalue])
-            this.myChart.data.labels= this.myChart.data.labels.concat(['sample'])
+            this.myChart.data.labels= this.myChart.data.labels.concat([date.substring(11,)])
             
             this.myChart.update()
         }

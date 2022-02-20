@@ -1,21 +1,17 @@
 var logs = []
 var socket
-var interval
+var timeout
 const methods = { // eslint-disable-line no-unused-vars
     chartConnect: () => {
         return new Promise((resolve, reject) => {
-            socket = new WebSocket('ws://localhost:8000/ws')
+            socket = new WebSocket('ws://sheltered-chamber-00843.herokuapp.com:80/ws')
+            // socket = new WebSocket('ws://localhost:8000/ws')
             socket.onopen = () => {
-                logs.push({event: 'connect complete: ', data: 'ws://localhost:8000/ws'})
-                clearInterval(interval)
-                interval = setInterval(() => socket.send(0), 4000)
+                console.log('?', socket)
+                logs.push({event: 'connect complete: ', data: 'ws://https://sheltered-chamber-00843.herokuapp.com/ws'})
+
+                // socket.send("2017-08-17T13:00:00") // 초기값은 BaseChart에서 입력받고 send해주면 통신 시작되는 것으로 바꾸기
                 resolve(socket)
-                // socket.onmessage = ({data}) => {
-                //     const recv = JSON.parse(data)
-                //     const value = Math.floor((recv.value * 100))
-                //     resolve(value)
-                    
-                // }
             }
             socket.onerror = (err) => {
                 reject(err)
@@ -23,21 +19,20 @@ const methods = { // eslint-disable-line no-unused-vars
         })
     },
     sendMessage:(message) => {
+        clearTimeout(timeout)
         if (message === 1) {
-            socket.send(1)
-            clearInterval(interval)
+            socket.send(JSON.stringify({'date':'1'}))
         }
         else {
-            clearInterval(interval)
-            interval = setInterval(() => socket.send(message), 4000)
+            timeout = setTimeout(()=> socket.send(JSON.stringify({'date': message})),2000)
         }
         logs.push({event: 'send message: ', data: message})
 
     },
+    sendTempMessage:(message) => {
+        socket.send(message)
+    },
     chartDisconnect: () => {
-        socket.onclose = function () {
-            clearInterval(interval);
-          };
         socket.close()
         console.log('Connection close')
         logs = []

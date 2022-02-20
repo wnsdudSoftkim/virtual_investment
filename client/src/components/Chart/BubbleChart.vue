@@ -1,6 +1,6 @@
 <template>
   <div>
-      <canvas id="chart_bubble" width="400" height="400"></canvas>
+      <canvas id="chart_bubble"  class="chart"></canvas>
   </div>
 </template>
 
@@ -101,6 +101,7 @@ export default {
                         }
                     }
                 },
+                aspectRatio: 1,
                 responsive: true,
                 maintainAspectRatio: false
             }

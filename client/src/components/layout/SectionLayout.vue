@@ -2,23 +2,19 @@
     <div class="section-layout" >
         <div class="section-container">
             <chart-section></chart-section>
-            <inform-layout/>
-            <green-button/>
+            <basic-modal></basic-modal>
+
         </div>
     </div>
 </template>
 
 <script>
 import ChartSection from '@/components/layout/ChartSectionLayout.vue'
-import InformLayout from '@/components/layout/InformLayout'
-import GreenButton from '@/components/common/button/GreenButton'
-
+import BasicModal from '@/components/common/modal/BasicModal'
 export default {
     name:"section-layout",
-    components: {ChartSection, InformLayout, GreenButton},
-    mounted() {
+    components: {ChartSection, BasicModal},
 
-    }
 }
 </script>
 

@@ -33,7 +33,7 @@ export default {
     },
     methods: {
         connect() {
-           this.cbvalue= computed(() => this.store.getters.updatechart)
+           this.cbvalue= computed(() => this.store.getters.updatevolume)
         },
         disconnect() {
             methods.chartDisconnect()
