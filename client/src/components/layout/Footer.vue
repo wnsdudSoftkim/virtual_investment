@@ -27,7 +27,7 @@
 export default {
     name:'main-footer',
     props: {
-        cbvalue: String
+        cbvalue: Number
     },
     methods: {
         showLastProfit() {

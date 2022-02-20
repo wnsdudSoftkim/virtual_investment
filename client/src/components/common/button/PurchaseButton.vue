@@ -45,6 +45,7 @@ export default {
         },
         increaseInvestAsset(item) {
           this.store.dispatch('IncreaseAsset', item)
+          this.store.dispatch('UpdateProfitAsset', item)
         }
     }, 
     watch: {

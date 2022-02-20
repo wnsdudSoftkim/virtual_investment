@@ -1,5 +1,5 @@
 const asset = {
-    state: () => ({ investasset: 0, priceasset: 0 }),
+    state: () => ({ investasset: 0, priceasset: 0, profitasset: 0 }),
     mutations: {
       INCREASE_ASSET(state, value) {
         state.investasset += value;
@@ -9,6 +9,9 @@ const asset = {
       },
       UPDATE_PRICE_ASSET(state, value) {
           state.priceasset = value
+      },
+      UPDATE_PROFIT_ASSET(state, value) {
+        state.profitasset = value
       }
     },
     actions: {
@@ -20,6 +23,9 @@ const asset = {
       },
       UpdatePriceAsset({commit}, value) {
         commit('UPDATE_PRICE_ASSET', value)
+      },
+      UpdateProfitAsset({commit}, value) {
+        commit('UPDATE_PROFIT_ASSET', value)
       }
     },
     getters: {
@@ -28,6 +34,9 @@ const asset = {
       },
       getPriceAsset: state => {
           return state.priceasset
+      },
+      getProfitAsset: state => {
+        return state.profitasset
       }
     }
 }

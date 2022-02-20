@@ -50,8 +50,8 @@ export default {
                 'symbol': this.symbol
             }
         },
-        Invest_Asset() {
-            return this.store.getters.getInvestAsset
+        Profit_Asset() {
+            return this.store.getters.getProfitAsset
         }
     },
     mounted() {
@@ -82,7 +82,11 @@ export default {
 
                     this.nowAsset = recv_other['Open']
                     this.storePriceAsset(this.nowAsset)
-                    this.profitRate = (((this.nowAsset-this.Invest_Asset)/this.Invest_Asset) * 100).toFixed(2)
+
+                    // this.calculateProfit(this.nowAsset)
+                    this.profitRate = (((this.nowAsset-this.Profit_Asset)/this.Profit_Asset) * 100).toFixed(2)
+                    console.log(this.profitRate)
+                
                     this.replaceAsset = this.nowAsset.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
                     
                     this.storeprofitRate(this.profitRate)
@@ -92,6 +96,10 @@ export default {
             })
         
         },
+        // calculateProfit(asset) {
+        //     this.profitRate = (1 + this.profitRate) * (((asset-this.Invest_Asset)/this.Invest_Asset) * 100).toFixed(2) -1
+        //     console.log(this.profitRate)
+        // },
         sendData(message) { // receive from store value
             methods.sendMessage(message)
         },
@@ -103,6 +111,7 @@ export default {
         },
         storeInvestAsset(item) {
             this.store.dispatch('IncreaseAsset', item)
+            this.store.dispatch('UpdateProfitAsset', item)
         },
         storeTrade(item) {
             this.store.dispatch('updateTrade', item)
