@@ -21,6 +21,11 @@ export default {
     props: {
         PROPS:String
     },
+    computed: {
+        Invest_Asset() {
+            return this.store.getters.getInvestAsset
+        },
+    },
     mounted() {
       this.count= computed(() => this.store.getters.getquantity)
       this.price = computed(() => this.store.getters.getPriceAsset)
@@ -49,8 +54,9 @@ export default {
         receiveProps() {
           this.symbol = this.PROPS.symbol
         },
-        decreaseInvestAsset(item) {
-          this.store.dispatch('DecreaseAsset', item)
+        decreaseInvestAsset() {
+          let average_value = this.Invest_Asset/ this.count
+          this.store.dispatch('DecreaseAsset', average_value)
         }
     },
     watch: {
@@ -89,11 +95,11 @@ export default {
 }
 
 .button-48 span {
-  background-color: blue;
+  background-color: #00baff;
   padding: 16px 24px;
   border-radius: 6px;
   width: 100%;
-  height: 100%;
+  height: 80%;
   transition: 300ms;
   display: flex;
   align-items: center;

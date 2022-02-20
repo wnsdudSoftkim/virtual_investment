@@ -3,7 +3,9 @@
         <div class="button-layout">
             <div class="information">
                 <reset-button></reset-button>
-                <span class="info firstasset">투자금액: <b>{{this.Invest_Asset}}</b> </span>
+                <!-- <span class="info firstasset">누적투자금액: <b>{{this.Invest_Asset}}</b> </span> -->
+                <span class="info firstasset">수익: <b>{{this.Invest_Rate}} 원</b> </span>
+
                 <span class="info nowAsset">현재금액: <b>{{this.PROPS.nowAsset}} 원</b> </span>
                 <span class="info profitRate">수익률: <b>{{this.PROPS.profitRate}} %</b></span>
                 <span class="info quentity">보유량: <b>{{this.quantity}}</b></span>
@@ -46,7 +48,6 @@ export default {
     components: {ResetButton, LineChartContainer, ProgressiveChartContainer, BarChartContainer, PurchaseButton, SellButton, DescriptionContainer},
     data() {
         return {
-  
             datacollection: null,
             store: useStore(),
             chart_data:null,
@@ -71,7 +72,9 @@ export default {
         },
         Invest_Asset() {
             return this.store.getters.getInvestAsset.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
-
+        },
+        Invest_Rate() {
+            return this.store.getters.getRate.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
         }
 
     },
@@ -99,8 +102,8 @@ export default {
 
 .button-layout {
     position:absolute;
-    top:20%;
-    right:8%;
+    top:10%;
+    right:5%;
     height:20rem;
     /* box-shadow: rgba(106, 36, 187, 1) */
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, .27);
