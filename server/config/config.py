@@ -13,7 +13,7 @@ class Settings:
     PROJECT_VERSION = "1.0.0"
     COLLECTION_NAME: str = "investment"
     MONGO_SERVICE_URI = "mongodb://localhost:27017"
-    MONGO_DB = "mydb"
+    MONGO_DB = "Investment"
 
 
 def get_settings():
