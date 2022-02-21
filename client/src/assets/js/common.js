@@ -4,8 +4,8 @@ var timeout
 const methods = { // eslint-disable-line no-unused-vars
     chartConnect: () => {
         return new Promise((resolve, reject) => {
-            // socket = new WebSocket('ws://sheltered-chamber-00843.herokuapp.com:80/ws')
-            socket = new WebSocket('ws://localhost:8000/ws')
+            socket = new WebSocket('wss://sheltered-chamber-00843.herokuapp.com/ws')
+            // socket = new WebSocket('ws://localhost:8000/ws')
             socket.onopen = () => {
                 logs.push({event: 'connect complete: ', data: 'ws://https://sheltered-chamber-00843.herokuapp.com/ws'})
                 resolve(socket)
