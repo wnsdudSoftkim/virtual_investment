@@ -1,8 +1,5 @@
 <template>
     <fragment-layout >
-        <!-- <div v-if="LOADING === 0" class="lottie_loading">
-            <lottie-loading></lottie-loading>
-        </div> -->
         <div class="main-section" >
             <left-side-bar-container ></left-side-bar-container>
             
@@ -12,7 +9,6 @@
 </template>
 
 <script>
-// import LottieLoading from '@/components/common/lottie/LottieLoading'
 import FragmentLayout from '@/components/layout/FragmentLayout'
 import { useStore } from 'vuex'
 import {computed} from 'vue'
@@ -131,7 +127,6 @@ export default {
             this.store.dispatch('updateVolume', item)
         },
         storePrice(item) {
-            // this.store.dispatch('updateValue', item)
             this.store.dispatch('updatePrice', item)
         },
         storeDate(item) {

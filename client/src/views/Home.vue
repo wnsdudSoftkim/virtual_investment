@@ -3,7 +3,7 @@
         <base-layout>
             <div class="section-header">
                 <p class="headerText">
-                  Virtual Investment with Python(AWS EC2)
+                  Virtual Investment with Python
                 </p>
                 <div class="header-section">
                     <p class="headerSubText">

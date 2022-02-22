@@ -7,7 +7,7 @@ const methods = { // eslint-disable-line no-unused-vars
             socket = new WebSocket('wss://sheltered-chamber-00843.herokuapp.com/ws')
             // socket = new WebSocket('ws://localhost:8000/ws')
             socket.onopen = () => {
-                logs.push({event: 'connect complete: ', data: 'ws://https://sheltered-chamber-00843.herokuapp.com/ws'})
+                logs.push({event: 'connect complete: ', data: 'ws://sheltered-chamber-00843.herokuapp.com/ws'})
                 resolve(socket)
             }
             socket.onerror = (err) => {
