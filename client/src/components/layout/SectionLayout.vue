@@ -20,6 +20,10 @@ export default {
 
 <style lang="scss">
 .section-layout{
+    @media screen and (max-width: 768px) { 
+        padding-left:0rem;
+        padding-right: 0rem;
+    }
     padding:2rem;
     padding-left:12rem;
     padding-right:12rem;
