@@ -1,3 +1,4 @@
 # virtual_investment
 
-*work on progress*
+### contributor
+- Xangle backend
