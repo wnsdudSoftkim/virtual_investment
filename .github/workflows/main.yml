@@ -1,0 +1,31 @@
+name: Merge Branch
+
+on:
+  repository_dispatch:
+  # Slash Command를 수신하기 위해 이벤트를 추가합니다.
+  # 슬래시 커맨드를 등록할 때 지정한 이벤트명과 일치해야 합니다.
+    types: [merge]
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      
+      - name: Merge branch
+        # 사용자가 입력한 source와 target 브랜치를 사용합니다.
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git fetch origin ${{ github.event.client_payload.source_branch }}
+          git checkout ${{ github.event.client_payload.target_branch }}
+          git merge ${{ github.event.client_payload.source_branch }}
+          git push origin ${{ github.event.client_payload.target_branch }}
+      
+      - name: Post message to Slack
+        # 브랜치 병합 결과를 Slack에 알리는 메시지를 작성합니다.
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"브랜치 병합이 완료되었습니다."}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
